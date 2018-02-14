@@ -80,4 +80,7 @@ ADD conf/supervisord.conf /etc/supervisord.conf
 ADD scripts/start.sh /start.sh
 RUN chmod 755 /start.sh
 
+# Test Nginx
+RUN nginx -c /etc/nginx/nginx.conf -t
+
 CMD ["/start.sh"]
