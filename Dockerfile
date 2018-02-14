@@ -75,4 +75,7 @@ RUN chmod 755 /start.sh
 # Test Nginx
 RUN nginx -c /etc/nginx/nginx.conf -t
 
+# Test PHP-FPM
+RUN /usr/bin/php-fpm5 --fpm-config /etc/php5/php-fpm.conf -t
+
 CMD ["/start.sh"]
