@@ -61,9 +61,9 @@ RUN mkdir -p /etc/nginx/sites-enabled/; \
 ADD conf/nginx-site.conf /etc/nginx/sites-enabled/site.conf
 
 ## PHP
-ADD conf/php-fpm.conf /etc/php7/php-fpm.conf
-ADD conf/php.ini /etc/php7/php.ini
-ADD conf/php-www.conf /etc/php7/php-fpm.d/www.conf
+ADD conf/php-fpm.conf /etc/php5/php-fpm.conf
+ADD conf/php.ini /etc/php5/php.ini
+ADD conf/php-www.conf /etc/php5/php-fpm.d/www.conf
 
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
