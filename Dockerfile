@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-ENV PHP_VERSION 7.1
+ENV PHP_VERSION 7.2
 
 RUN apk add --no-cache bash ca-certificates openssl
 
@@ -56,8 +56,8 @@ RUN apk add --no-cache \
   supervisor 
 
 # These only exist in 7.1, not 7.2
-RUN apk add --no-cache php7-mcrypt@php \
-  php7-xmlrpc@php
+#RUN apk add --no-cache php7-mcrypt@php \
+#  php7-xmlrpc@php
 
 RUN apk add --no-cache nginx
 
