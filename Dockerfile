@@ -37,7 +37,6 @@ RUN apk add --no-cache \
   php7-json@php \
   php7-pcntl@php \
   php7-apcu@php \
-  php7-mcrypt@php \
   php7-phar@php \
   php7-sockets@php \
   php7-tidy@php \
@@ -45,7 +44,6 @@ RUN apk add --no-cache \
   php7-xmlreader@php \
   php7-zip@php \
   php7-zlib@php \
-  php7-xmlrpc@php \
   php7-xsl@php \
   php7-opcache@php \
   php7-imagick@php \
@@ -57,6 +55,10 @@ RUN apk add --no-cache \
   php7-fpm@php \
   supervisor 
 
+# These only exist in 7.1, not 7.2
+RUN apk add --no-cache php7-mcrypt@php \
+  php7-xmlrpc@php
+
 RUN apk add --no-cache nginx
 
 ADD conf/nginx.conf /etc/nginx/nginx.conf
@@ -67,6 +69,9 @@ RUN mkdir -p /etc/nginx/sites-enabled/; \
   ln -s /usr/bin/php7 /usr/bin/php
 
 ADD conf/nginx-site.conf /etc/nginx/sites-enabled/site.conf
+
+# Nginx temp upload dir
+RUN mkdir -p /var/nginx-uploads && chown nobody:nobody /var/nginx-uploads
 
 ## PHP
 ADD conf/php-fpm.conf /etc/php7/php-fpm.conf
