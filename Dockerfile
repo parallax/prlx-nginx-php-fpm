@@ -255,6 +255,4 @@ ADD conf/php-www.conf /etc/php7/php-fpm.d/www.conf
 # Test PHP-FPM
 RUN /usr/sbin/php-fpm7 --fpm-config /etc/php7/php-fpm.conf -t
 
-RUN apk add --no-cache nano curl
-
 CMD ["/start.sh"]
