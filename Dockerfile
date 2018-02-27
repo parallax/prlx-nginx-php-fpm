@@ -65,6 +65,10 @@ RUN apk add --no-cache \
 #RUN apk add --no-cache php7-mcrypt@php \
 #  php7-xmlrpc@php
 
+RUN mkdir -p /src; \
+  ln -s /etc/php7 /etc/php; \
+  ln -s /usr/bin/php7 /usr/bin/php
+
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
 
