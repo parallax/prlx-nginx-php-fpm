@@ -12,3 +12,9 @@ Use the following tags:
 
 PHP 7.2: prlx/prlx-nginx-php-fpm:7.2
 PHP 7.1: prlx/prlx-nginx-php-fpm:7.1
+
+Clean, minimal Nginx-PHP image for Docker/Kubernetes
+
+Listens on :80 for HTTP requests
+
+Has PHP-FPM Prometheus metrics on :8080
