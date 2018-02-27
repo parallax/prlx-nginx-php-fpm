@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-ENV PHP_VERSION 7.2
+ENV PHP_VERSION 7.1
 
 RUN apk add --no-cache bash nginx supervisor
 
@@ -62,8 +62,8 @@ RUN apk add --no-cache \
   supervisor 
 
 # These only exist in 7.1, not 7.2
-#RUN apk add --no-cache php7-mcrypt@php \
-#  php7-xmlrpc@php
+RUN apk add --no-cache php7-mcrypt@php \
+  php7-xmlrpc@php
 
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
