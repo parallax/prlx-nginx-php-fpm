@@ -2,14 +2,20 @@ FROM alpine:3.7
 
 ENV PHP_VERSION 7.2
 
-RUN apk add --no-cache bash ca-certificates openssl
+RUN apk add --no-cache bash nginx supervisor
 
-# Install PHP
+# Nginx temp upload dir
+RUN mkdir -p /var/nginx-uploads && chown nobody:nobody /var/nginx-uploads
+
+# php-fpm-exporter for prometheus
+ADD https://github.com/bakins/php-fpm-exporter/releases/download/v0.3.3/php-fpm-exporter.linux.amd64 /usr/local/bin/php-fpm-exporter
+
+RUN chmod +x /usr/local/bin/php-fpm-exporter
 
 # Add PHP public keys 
 ADD https://php.codecasts.rocks/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
 
-RUN apk --no-cache add ca-certificates && \
+RUN apk --no-cache add ca-certificates openssl && \
   echo "@php https://php.codecasts.rocks/v3.7/php-$PHP_VERSION" >> /etc/apk/repositories
 
 RUN apk add --no-cache \
@@ -59,25 +65,6 @@ RUN apk add --no-cache \
 #RUN apk add --no-cache php7-mcrypt@php \
 #  php7-xmlrpc@php
 
-RUN apk add --no-cache nginx
-
-ADD conf/nginx.conf /etc/nginx/nginx.conf
-
-RUN mkdir -p /etc/nginx/sites-enabled/; \ 
-  mkdir -p /src; \
-  ln -s /etc/php7 /etc/php; \
-  ln -s /usr/bin/php7 /usr/bin/php
-
-ADD conf/nginx-site.conf /etc/nginx/sites-enabled/site.conf
-
-# Nginx temp upload dir
-RUN mkdir -p /var/nginx-uploads && chown nobody:nobody /var/nginx-uploads
-
-## PHP
-ADD conf/php-fpm.conf /etc/php7/php-fpm.conf
-ADD conf/php.ini /etc/php7/php.ini
-ADD conf/php-www.conf /etc/php7/php-fpm.d/www.conf
-
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
 
@@ -85,8 +72,18 @@ ADD conf/supervisord.conf /etc/supervisord.conf
 ADD scripts/start.sh /start.sh
 RUN chmod 755 /start.sh
 
+ADD conf/nginx.conf /etc/nginx/nginx.conf
+
+ADD conf/nginx-site.conf /etc/nginx/sites-enabled/site.conf
+ADD conf/nginx-status.conf /etc/nginx/sites-enabled/status.conf
+
 # Test Nginx
 RUN nginx -c /etc/nginx/nginx.conf -t
+
+## PHP
+ADD conf/php-fpm.conf /etc/php7/php-fpm.conf
+ADD conf/php.ini /etc/php7/php.ini
+ADD conf/php-www.conf /etc/php7/php-fpm.d/www.conf
 
 # Test PHP-FPM
 RUN /usr/sbin/php-fpm7 --fpm-config /etc/php7/php-fpm.conf -t
