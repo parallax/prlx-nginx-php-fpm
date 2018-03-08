@@ -229,6 +229,10 @@ RUN mkdir -p /src && \
   ln -s /usr/bin/php7 /usr/bin/php && \
   ln -s /usr/sbin/php-fpm7 /usr/bin/php-fpm
 
+# Add Composer
+ADD https://getcomposer.org/installer /tmp/composer-installer
+RUN php /tmp/composer-installer --install-dir=/usr/local/bin --filename=composer
+
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
 
