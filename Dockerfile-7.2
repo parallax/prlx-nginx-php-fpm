@@ -221,12 +221,13 @@ RUN apk add --no-cache \
   php7-pdo_sqlite@php \ 
   php7-sqlite3@php \ 
   php7-redis@php \ 
-  php7-fpm@php \
-  supervisor 
+  php7-intl@php \ 
+  php7-fpm@php
 
-RUN mkdir -p /src; \
-  ln -s /etc/php7 /etc/php; \
-  ln -s /usr/bin/php7 /usr/bin/php
+RUN mkdir -p /src && \
+  ln -s /etc/php7 /etc/php && \
+  ln -s /usr/bin/php7 /usr/bin/php && \
+  ln -s /usr/sbin/php-fpm7 /usr/bin/php-fpm
 
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
@@ -249,6 +250,6 @@ ADD conf/php.ini /etc/php7/php.ini
 ADD conf/php-www.conf /etc/php7/php-fpm.d/www.conf
 
 # Test PHP-FPM
-RUN /usr/sbin/php-fpm7 --fpm-config /etc/php7/php-fpm.conf -t
+RUN /usr/bin/php-fpm --fpm-config /etc/php/php-fpm.conf -t
 
 CMD ["/start.sh"]
