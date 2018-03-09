@@ -219,6 +219,9 @@ RUN apk add --no-cache php5-mcrypt \
 
 # Missing: php5-imagick, php5-redis
 
+# Imagick support file types
+RUN apk add --no-cache imagemagick
+
 # Imagick
 RUN apk --no-cache add ca-certificates wget && \
   apk add --no-cache imagemagick-dev && \

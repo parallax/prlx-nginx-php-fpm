@@ -224,6 +224,9 @@ RUN apk add --no-cache \
   php7-intl@php \ 
   php7-fpm@php
 
+# Imagick support file types
+RUN apk add --no-cache imagemagick
+
 # These only exist in 7.1, not 7.2
 RUN apk add --no-cache php7-mcrypt@php \
   php7-xmlrpc@php

@@ -224,6 +224,9 @@ RUN apk add --no-cache \
   php7-intl@php \ 
   php7-fpm@php
 
+# Imagick support file types
+RUN apk add --no-cache imagemagick
+
 RUN mkdir -p /src && \
   ln -s /etc/php7 /etc/php && \
   ln -s /usr/bin/php7 /usr/bin/php && \
