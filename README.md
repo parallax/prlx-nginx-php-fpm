@@ -29,6 +29,7 @@ For help running these locally with docker run see the [docker run reference](ht
 | DISABLE_MONITORING    | Set to any value (1, true, etc) to disable all monitoring functionality (see ports/services)                      | --                    |
 | NGINX_WEB_ROOT        | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths!   | --                    |
 | PHP_MEMORY_MAX        | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                           | --                    |
+| DISABLE_OPCACHE       | Set to any value (1, true, etc) to disable PHP Opcache                                                            | --                    |
 
 # The web mode/command
 

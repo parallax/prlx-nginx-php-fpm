@@ -5,19 +5,13 @@ printf "\033[1;1m ____   __    ____    __    __    __      __    _  _
  )___//(__)\  )   / /(__)\  )(__  )(__  /(__)\  )  ( 
 (__) (__)(__)(_)\_)(__)(__)(____)(____)(__)(__)(_/\_)\033[0m\n"
 
-printf "\n\033[1;1mRunning Nginx PHP-FPM web mode\033[0m\n\n"
+printf "\n\033[1;1mRunning Nginx PHP-FPM worker mode\033[0m\n\n"
 
 # printf "%-30s %-30s\n" "Key" "Value"
 
 # Version numbers:
 printf "%-30s %-30s\n" "PHP Version:" "`php -r 'echo phpversion();'`"
 printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"
-
-# Enable Nginx
-cp /etc/supervisor.d/nginx.conf /etc/supervisord-enabled/
-
-# Enable PHP-FPM
-cp /etc/supervisor.d/php-fpm.conf /etc/supervisord-enabled/
 
 # New Relic - if license key is set then configure and enable
 if [ ! -z "$NEWRELIC_LICENSE_KEY" ]; then
@@ -64,21 +58,6 @@ if [ -z "$DISABLE_MONITORING" ]; then
 
 fi
 
-if [ ! -z "$NGINX_WEB_ROOT" ]; then
-
-    # Replace web root
-    sed -i -e "s#root /src/public#root $NGINX_WEB_ROOT#g" /etc/nginx/sites-enabled/site.conf
-
-    printf "%-30s %-30s\n" "Nginx Web Root:" "$NGINX_WEB_ROOT"
-
-fi
-
-if [ -z "$NGINX_WEB_ROOT" ]; then
-    
-    printf "%-30s %-30s\n" "Nginx Web Root:" "/src/public"
-
-fi
-
 # PHP Max Memory
 # If not set
 if [ -z "$PHP_MEMORY_MAX" ]; then
@@ -93,23 +72,6 @@ if [ ! -z "$PHP_MEMORY_MAX" ]; then
 
     # Set PHP.ini accordingly
     sed -i -e "s#memory_limit = 128M#memory_limit = ${PHP_MEMORY_MAX}M#g" /etc/php/php.ini
-
-fi
-
-# PHP Opcache
-# If not set
-if [ -z "$PHP_MEMORY_MAX" ]; then
-    
-    printf "%-30s %-30s\n" "PHP Opcache:" "Enabled"
-
-fi
-# If set
-if [ ! -z "$PHP_MEMORY_MAX" ]; then
-    
-    printf "%-30s %-30s\n" "PHP Opcache:" "Disabled"
-
-    # Set PHP.ini accordingly
-    sed -i -e "s#opcache.enable=1#opcache.enable=0#g" /etc/php/php.ini
 
 fi
 
