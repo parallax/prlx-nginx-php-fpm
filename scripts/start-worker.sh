@@ -37,27 +37,6 @@ if [ -z "$NEWRELIC_LICENSE_KEY" ]; then
 
 fi
 
-# If DISABLE_MONITORING is set:
-if [ ! -z "$DISABLE_MONITORING" ]; then
-
-    # Disabled
-    printf "%-30s %-30s\n" "Monitoring:" "Disabled"
-
-    rm -f /etc/nginx/sites-enabled/status.conf
-
-fi
-
-# If not set, enable monitoring:
-if [ -z "$DISABLE_MONITORING" ]; then
-
-    # Enabled
-    printf "%-30s %-30s\n" "Monitoring:" "Enabled"
-
-    cp /etc/supervisor.d/nginx-exporter.conf /etc/supervisord-enabled/
-    cp /etc/supervisor.d/php-fpm-exporter.conf /etc/supervisord-enabled/
-
-fi
-
 # PHP Max Memory
 # If not set
 if [ -z "$PHP_MEMORY_MAX" ]; then

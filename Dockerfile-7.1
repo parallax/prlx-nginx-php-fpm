@@ -262,6 +262,8 @@ RUN mkdir -p /etc/supervisord-enabled
 # Scripts
 ADD scripts/start-web.sh /start-web.sh
 RUN chmod 755 /start-web.sh
+ADD scripts/start-worker.sh /start-worker.sh
+RUN chmod 755 /start-worker.sh
 
 ADD conf/nginx.conf /etc/nginx/nginx.conf
 
