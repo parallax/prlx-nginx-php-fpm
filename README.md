@@ -24,14 +24,14 @@ For help running these locally with docker run see the [docker run reference](ht
 
 | Key                  | Description                                                                                                     | Required | Web | Worker |
 | ---                  | ---                                                                                                             | ---      | --- | ---    |
-| SITE_NAME            | The name of your project, i.e. 'mywebsite'. Used by NR for app name.                                            | ✔        | ✔   | ✔      |
-| SITE_BRANCH          | The running branch of your project, i.e. 'master'. Used by NR for app name.                                     | ✔        | ✔   | ✔      |
-| ENVIRONMENT          | The environment you're running in, i.e. 'qa' or 'production'. Used by NR for app name.                          | ✔        | ✔   | ✔      |
-| NEWRELIC_LICENSE_KEY | Your New Relic license key. New Relic won't be used if this is not set.                                         | ✖        | ✔   | ✔      |
-| DISABLE_MONITORING   | Set to any value (1, true, etc) to disable all monitoring functionality (see ports/services)                    | ✖        | ✔   | ✖      |
-| NGINX_WEB_ROOT       | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths! | ✖        | ✔   | ✖      |
-| PHP_MEMORY_MAX       | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                         | ✖        | ✔   | ✔      |
-| DISABLE_OPCACHE      | Set to any value (1, true, etc) to disable PHP Opcache                                                          | ✖        | ✔   | ✔      |
+| SITE_NAME            | The name of your project, i.e. 'mywebsite'. Used by NR for app name.                                            | ✓        | ✓   | ✓      |
+| SITE_BRANCH          | The running branch of your project, i.e. 'master'. Used by NR for app name.                                     | ✓        | ✓   | ✓      |
+| ENVIRONMENT          | The environment you're running in, i.e. 'qa' or 'production'. Used by NR for app name.                          | ✓        | ✓   | ✓      |
+| NEWRELIC_LICENSE_KEY | Your New Relic license key. New Relic won't be used if this is not set.                                         | ✖        | ✓   | ✓      |
+| DISABLE_MONITORING   | Set to any value (1, true, etc) to disable all monitoring functionality (see ports/services)                    | ✖        | ✓   | ✖      |
+| NGINX_WEB_ROOT       | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths! | ✖        | ✓   | ✖      |
+| PHP_MEMORY_MAX       | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                         | ✖        | ✓   | ✓      |
+| DISABLE_OPCACHE      | Set to any value (1, true, etc) to disable PHP Opcache                                                          | ✖        | ✓   | ✓      |
 
 # The web mode/command
 
