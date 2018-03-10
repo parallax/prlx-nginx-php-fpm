@@ -82,3 +82,13 @@ stdout_logfile_maxbytes=0
 stderr_logfile=/dev/stderr
 stderr_logfile_maxbytes=0
 ```
+
+## Cron Jobs on Worker
+
+The worker has support for cron (can be disabled using DISABLE_CRON). To add a crontab, call it the name of the user you want it to run as (probably 'nobody') and ADD it to /etc/cron.d.
+
+Example:
+
+```
+* * * * * date
+```
