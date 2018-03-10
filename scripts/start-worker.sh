@@ -75,6 +75,23 @@ if [ ! -z "$PHP_MEMORY_MAX" ]; then
 
 fi
 
+# PHP Opcache
+# If not set
+if [ -z "$PHP_MEMORY_MAX" ]; then
+    
+    printf "%-30s %-30s\n" "PHP Opcache:" "Enabled"
+
+fi
+# If set
+if [ ! -z "$PHP_MEMORY_MAX" ]; then
+    
+    printf "%-30s %-30s\n" "PHP Opcache:" "Disabled"
+
+    # Set PHP.ini accordingly
+    sed -i -e "s#opcache.enable=1#opcache.enable=0#g" /etc/php/php.ini
+
+fi
+
 printf "\n\033[1;1mStarting supervisord\033[0m\n\n"
 
 # Start supervisord and services
