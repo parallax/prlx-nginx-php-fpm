@@ -227,6 +227,9 @@ RUN apk --no-cache add ca-certificates wget && \
   apk add php5-imagick-3.4.3-r0.apk && \
   apk del imagemagick-dev
 
+# Imagick support file types
+RUN apk add --no-cache imagemagick
+
 RUN mkdir -p /src && \
   ln -s /etc/php5 /etc/php && \
   ln -s /usr/bin/php5 /usr/bin/php && \
