@@ -269,9 +269,9 @@ ADD conf/nginx-status.conf /etc/nginx/sites-enabled/status.conf
 RUN nginx -c /etc/nginx/nginx.conf -t
 
 ## PHP
-ADD conf/php-fpm.conf /etc/php7/php-fpm.conf
-ADD conf/php.ini /etc/php7/php.ini
-ADD conf/php-www.conf /etc/php7/php-fpm.d/www.conf
+ADD conf/php-fpm.conf /etc/php/php-fpm.conf
+ADD conf/php.ini /etc/php/php.ini
+ADD conf/php-www.conf /etc/php/php-fpm.d/www.conf
 
 # Test PHP-FPM
 RUN /usr/bin/php-fpm --fpm-config /etc/php/php-fpm.conf -t

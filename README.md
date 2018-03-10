@@ -27,7 +27,8 @@ For help running these locally with docker run see the [docker run reference](ht
 | ENVIRONMENT           | The environment you're running in, i.e. 'qa' or 'production'. Used by NR for app name.                            | ✔                     |
 | NEWRELIC_LICENSE_KEY  | Your New Relic license key. New Relic won't be used if this is not set.                                           | --                    |
 | DISABLE_MONITORING    | Set to any value (1, true, etc) to disable all monitoring functionality (see ports/services)                      | --                    |
-| NGINX_WEB_ROOT        | Defaults to /src/public, use absolute paths if you wish to change this behaviour                                  | --                    |
+| NGINX_WEB_ROOT        | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths!   | --                    |
+| PHP_MEMORY_MAX        | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                           | --                    |
 
 # The web mode/command
 
