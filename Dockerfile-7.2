@@ -277,4 +277,7 @@ ADD conf/php-www.conf /etc/php/php-fpm.d/www.conf
 # Test PHP-FPM
 RUN /usr/bin/php-fpm --fpm-config /etc/php/php-fpm.conf -t
 
+# Cron
+RUN mkdir -p /etc/cron.d
+
 CMD ["/start-web.sh"]

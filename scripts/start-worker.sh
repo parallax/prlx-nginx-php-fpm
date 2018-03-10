@@ -71,6 +71,25 @@ if [ ! -z "$PHP_MEMORY_MAX" ]; then
 
 fi
 
+# Cron
+# If DISABLE_CRON is set:
+if [ ! -z "$DISABLE_CRON" ]; then
+
+    # Disabled
+    printf "%-30s %-30s\n" "Cron:" "Disabled"
+
+fi
+
+# If not set, enable monitoring:
+if [ -z "$DISABLE_CRON" ]; then
+
+    # Enabled
+    printf "%-30s %-30s\n" "Cron:" "Enabled"
+
+    cp /etc/supervisor.d/cron.conf /etc/supervisord-enabled/
+
+fi
+
 printf "\n\033[1;1mStarting supervisord\033[0m\n\n"
 
 # Start supervisord and services
