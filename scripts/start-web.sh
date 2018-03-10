@@ -3,15 +3,15 @@
 printf "\033[1;1m ____   __    ____    __    __    __      __    _  _ 
 (  _ \ /__\  (  _ \  /__\  (  )  (  )    /__\  ( \/ )
  )___//(__)\  )   / /(__)\  )(__  )(__  /(__)\  )  ( 
-(__) (__)(__)(_)\_)(__)(__)(____)(____)(__)(__)(_/\_)\033[0m\n\n"
+(__) (__)(__)(_)\_)(__)(__)(____)(____)(__)(__)(_/\_)\033[0m\n"
 
-printf "\n\n\033[1;1mRunning Nginx PHP-FPM web mode\033[0m\n\n"
+printf "\n\033[1;1mRunning Nginx PHP-FPM web mode\033[0m\n\n"
 
 # printf "%-30s %-30s\n" "Key" "Value"
 
 # Version numbers:
-printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"
 printf "%-30s %-30s\n" "PHP Version:" "`php -r 'echo phpversion();'`"
+printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"
 
 # Enable Nginx
 cp /etc/supervisor.d/nginx.conf /etc/supervisord-enabled/
@@ -96,7 +96,7 @@ if [ ! -z "$PHP_MEMORY_MAX" ]; then
 
 fi
 
-printf "\n\n"
+printf "\n\033[1;1mStarting supervisord\033[0m\n\n"
 
 # Start supervisord and services
 exec /usr/bin/supervisord -n -c /etc/supervisord.conf
