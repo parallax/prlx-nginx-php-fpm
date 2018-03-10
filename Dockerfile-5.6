@@ -236,12 +236,28 @@ RUN mkdir -p /src && \
 ADD https://getcomposer.org/installer /tmp/composer-installer
 RUN php /tmp/composer-installer --install-dir=/usr/local/bin --filename=composer
 
+# Newrelic
+RUN wget https://download.newrelic.com/php_agent/release/newrelic-php5-7.7.0.203-linux-musl.tar.gz -O /tmp/newrelic.tar.gz &&\
+ mkdir -p /usr/local/etc/php &&\
+ cd /tmp &&\ 
+ gzip -dc /tmp/newrelic.tar.gz | tar xf - &&\
+ cd /tmp/newrelic-php5-* &&\
+ export NR_INSTALL_SILENT=1 &&\
+ export NR_INSTALL_KEY=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa &&\
+ export NR_INSTALL_USE_CP_NOT_LN=0 &&\
+ ./newrelic-install install &&\
+ rm -rf /tmp/newrelic-php5-* &&\
+ rm -f /tmp/newrelic.tar.gz &&\ 
+ rm -f /tmp/nrinstall* 
+
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
+ADD conf/supervisor.d /etc/supervisor.d
+RUN mkdir -p /etc/supervisord-enabled
 
 # Scripts
-ADD scripts/start.sh /start.sh
-RUN chmod 755 /start.sh
+ADD scripts/start-web.sh /start-web.sh
+RUN chmod 755 /start-web.sh
 
 ADD conf/nginx.conf /etc/nginx/nginx.conf
 
@@ -259,4 +275,4 @@ ADD conf/php-www.conf /etc/php5/php-fpm.d/www.conf
 # Test PHP-FPM
 RUN /usr/bin/php-fpm --fpm-config /etc/php/php-fpm.conf -t
 
-CMD ["/start.sh"]
+CMD ["/start-web.sh"]
