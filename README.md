@@ -145,7 +145,7 @@ Example:
 | Phar          | ✓   | ✓   | ✓   |
 | posix         | ✓   | ✓   | ✓   |
 | readline      | ✓   | ✓   | ✓   |
-| redis         | ✖   | ✓   | ✓   |
+| redis         | ✓   | ✓   | ✓   |
 | Reflection    | ✓   | ✓   | ✓   |
 | session       | ✓   | ✓   | ✓   |
 | SimpleXML     | ✓   | ✓   | ✓   |

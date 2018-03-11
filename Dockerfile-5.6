@@ -230,6 +230,12 @@ RUN apk --no-cache add ca-certificates wget && \
 # Imagick support file types
 RUN apk add --no-cache imagemagick
 
+# Add php5-redis
+RUN apk --no-cache add ca-certificates wget && \
+  wget --quiet --output-document=/etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
+  wget https://github.com/sgerrand/alpine-pkg-php5-redis/releases/download/3.1.6-r0/php5-redis-3.1.6-r0.apk && \
+  apk add php5-redis-3.1.6-r0.apk
+
 RUN mkdir -p /src && \
   ln -s /etc/php5 /etc/php && \
   ln -s /usr/bin/php5 /usr/bin/php && \
