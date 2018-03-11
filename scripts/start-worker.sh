@@ -9,6 +9,11 @@ printf "\n\033[1;1mRunning Nginx PHP-FPM worker mode\033[0m\n\n"
 
 # printf "%-30s %-30s\n" "Key" "Value"
 
+# Container info:
+printf "%-30s %-30s\n" "Site:" "$SITE_NAME"
+printf "%-30s %-30s\n" "Branch:" "$SITE_BRANCH"
+printf "%-30s %-30s\n" "Environment:" "$ENVIRONMENT"
+
 # Version numbers:
 printf "%-30s %-30s\n" "PHP Version:" "`php -r 'echo phpversion();'`"
 printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"
