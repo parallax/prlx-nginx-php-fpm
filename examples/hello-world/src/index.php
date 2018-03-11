@@ -1,0 +1,1 @@
+It works! Running PHP <?php echo phpversion(); ?>

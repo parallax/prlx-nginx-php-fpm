@@ -58,6 +58,18 @@ We use [Supervisord](http://supervisord.org/) to bootstrap the following service
 
 You don't have to run all of these services - if you're not using Kubernetes, the status and Prometheus exporters are likely to be of little use to you, in which case we would suggest setting DISABLE_MONITORING to 'true' to only have an Nginx listening on 0.0.0.0:80 and a PHP-FPM socket at /run/php.sock.
 
+## Example Container
+
+There is an example container in [examples/hello-world](examples/hello-world). To run it:
+
+```bash
+cd examples/hello-world
+docker build -t example .
+docker run -p 8080:80 example
+```
+
+You should be able to visit the container on http://127.0.0.1:8080/ and see the contents of index.php from /examples/hello-world/src.
+
 # The worker mode/command
 
 The worker mode is used when you want to run a worker-type task in this container. Usually this means something like php artisan queue:work.
@@ -92,3 +104,64 @@ Example:
 ```
 * * * * * date
 ```
+
+# PHP Modules
+| Module        | 5.6 | 7.1 | 7.2 |
+| ---           | --- | --- | --- |
+| apc           | ✓   | ✓   | ✓   |
+| apcu          | ✓   | ✖   | ✖   |
+| bcmath        | ✓   | ✓   | ✓   |
+| calendar      | ✓   | ✓   | ✓   |
+| Core          | ✓   | ✓   | ✓   |
+| ctype         | ✓   | ✓   | ✓   |
+| curl          | ✓   | ✓   | ✓   |
+| date          | ✓   | ✓   | ✓   |
+| dom           | ✓   | ✓   | ✓   |
+| ereg          | ✓   | ✖   | ✖   |
+| exif          | ✓   | ✓   | ✓   |
+| fileinfo      | ✓   | ✓   | ✓   |
+| filter        | ✓   | ✓   | ✓   |
+| ftp           | ✓   | ✓   | ✓   |
+| gd            | ✓   | ✓   | ✓   |
+| gettext       | ✓   | ✓   | ✓   |
+| hash          | ✓   | ✓   | ✓   |
+| iconv         | ✓   | ✓   | ✓   |
+| imagick       | ✓   | ✓   | ✓   |
+| intl          | ✓   | ✓   | ✓   |
+| json          | ✓   | ✓   | ✓   |
+| ldap          | ✓   | ✓   | ✓   |
+| libxml        | ✓   | ✓   | ✓   |
+| mbstring      | ✓   | ✓   | ✓   |
+| mcrypt        | ✓   | ✓   | ✖   |
+| mysqli        | ✓   | ✓   | ✓   |
+| mysqlnd       | ✓   | ✓   | ✓   |
+| newrelic      | ✓   | ✓   | ✓   |
+| openssl       | ✓   | ✓   | ✓   |
+| pcntl         | ✓   | ✓   | ✓   |
+| pcre          | ✓   | ✓   | ✓   |
+| PDO           | ✓   | ✓   | ✓   |
+| pdo_mysql     | ✓   | ✓   | ✓   |
+| pdo_sqlite    | ✓   | ✓   | ✓   |
+| Phar          | ✓   | ✓   | ✓   |
+| posix         | ✓   | ✓   | ✓   |
+| readline      | ✓   | ✓   | ✓   |
+| redis         | ✖   | ✓   | ✓   |
+| Reflection    | ✓   | ✓   | ✓   |
+| session       | ✓   | ✓   | ✓   |
+| SimpleXML     | ✓   | ✓   | ✓   |
+| soap          | ✓   | ✓   | ✓   |
+| sockets       | ✓   | ✓   | ✓   |
+| SPL           | ✓   | ✓   | ✓   |
+| sqlite3       | ✓   | ✓   | ✓   |
+| standard      | ✓   | ✓   | ✓   |
+| tidy          | ✖   | ✓   | ✓   |
+| tokenizer     | ✓   | ✓   | ✓   |
+| wddx          | ✓   | ✓   | ✓   |
+| xml           | ✓   | ✓   | ✓   |
+| xmlreader     | ✓   | ✓   | ✓   |
+| xmlrpc        | ✓   | ✓   | ✖   |
+| xmlwriter     | ✓   | ✓   | ✓   |
+| xsl           | ✓   | ✓   | ✓   |
+| Zend OPcache  | ✓   | ✓   | ✓   |
+| zip           | ✓   | ✓   | ✓   |
+| zlib          | ✓   | ✓   | ✓   |
