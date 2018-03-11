@@ -56,18 +56,19 @@ fi
 
 # PHP Opcache
 # If not set
-if [ -z "$PHP_MEMORY_MAX" ]; then
+if [ -z "$DISABLE_OPCACHE" ]; then
     
     printf "%-30s %-30s\n" "PHP Opcache:" "Enabled"
 
 fi
 # If set
-if [ ! -z "$PHP_MEMORY_MAX" ]; then
+if [ ! -z "$DISABLE_OPCACHE" ]; then
     
     printf "%-30s %-30s\n" "PHP Opcache:" "Disabled"
-
+    
     # Set PHP.ini accordingly
     sed -i -e "s#opcache.enable=1#opcache.enable=0#g" /etc/php/php.ini
+    sed -i -e "s#opcache.enable_cli=1#opcache.enable_cli=0#g" /etc/php/php.ini
 
 fi
 
