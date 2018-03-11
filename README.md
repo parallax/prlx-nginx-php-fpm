@@ -1,8 +1,6 @@
-![Parallax](https://parallax.exposecms.com/parallax/img/logo.png "Parallax")
-
 # prlx-nginx-php-fpm
 
-> A relatively clean but full-featured, usable nginx and php-fpm docker image supporting PHP versions 5.6, 7.1, 7.2
+> A relatively clean but full-featured, usable nginx and php-fpm docker image supporting PHP versions 5.6, 7.1, 7.2 maintained by [Parallax](https://parall.ax/)
 
 ## Docker Tags 
 
