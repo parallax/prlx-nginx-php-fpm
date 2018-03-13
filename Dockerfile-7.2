@@ -237,7 +237,7 @@ ADD https://getcomposer.org/installer /tmp/composer-installer
 RUN php /tmp/composer-installer --install-dir=/usr/local/bin --filename=composer
 
 # Newrelic
-RUN wget https://download.newrelic.com/php_agent/release/newrelic-php5-7.7.0.203-linux-musl.tar.gz -O /tmp/newrelic.tar.gz &&\
+RUN wget https://download.newrelic.com/php_agent/release/newrelic-php5-8.0.0.204-linux-musl.tar.gz -O /tmp/newrelic.tar.gz &&\
  mkdir -p /usr/local/etc/php &&\
  cd /tmp &&\ 
  gzip -dc /tmp/newrelic.tar.gz | tar xf - &&\
