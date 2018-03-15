@@ -85,21 +85,16 @@ if [ -z "$NGINX_WEB_ROOT" ]; then
 fi
 
 # PHP Max Memory
-# If not set
-if [ -z "$PHP_MEMORY_MAX" ]; then
-    
-    printf "%-30s %-30s\n" "PHP Memory Max:" "128M"
-
-fi
 # If set
 if [ ! -z "$PHP_MEMORY_MAX" ]; then
     
-    printf "%-30s %-30s\n" "PHP Memory Max:" "${PHP_MEMORY_MAX}M"
-
     # Set PHP.ini accordingly
     sed -i -e "s#memory_limit = 128M#memory_limit = ${PHP_MEMORY_MAX}M#g" /etc/php/php.ini
 
 fi
+
+# Print the real value
+printf "%-30s %-30s\n" "PHP Memory Max:" "`php -r 'echo ini_get("memory_limit");'`"
 
 # PHP Opcache
 # If not set
