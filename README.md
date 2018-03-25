@@ -79,7 +79,7 @@ You will need to ship your own worker supervisord jobs by adding these to /etc/s
 An example of one of these files is provided below - feel free to amend as appropriate:
 
 ```
-[program:php artisan queue:listen]
+[program:laravel-queue]
 command=/usr/bin/php artisan queue:listen 
 directory=/src
 autostart=true
