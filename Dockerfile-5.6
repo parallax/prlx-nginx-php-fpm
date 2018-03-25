@@ -262,7 +262,7 @@ RUN wget https://download.newrelic.com/php_agent/release/newrelic-php5-8.0.0.204
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
 ADD conf/supervisor.d /etc/supervisor.d
-RUN mkdir -p /etc/supervisord-enabled
+RUN mkdir -p /etc/supervisord-enabled && mkdir -p /etc/supervisord-worker
 
 # Scripts
 ADD scripts/start-web.sh /start-web.sh

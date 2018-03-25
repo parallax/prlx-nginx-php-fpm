@@ -91,6 +91,9 @@ if [ -z "$DISABLE_CRON" ]; then
 
 fi
 
+# Enable the worker-specific supervisor files
+cp /etc/supervisord-worker/* /etc/supervisord-enabled/
+
 printf "\n\033[1;1mStarting supervisord\033[0m\n\n"
 
 # Start supervisord and services

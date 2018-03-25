@@ -74,13 +74,13 @@ The worker mode is used when you want to run a worker-type task in this containe
 
 To run in this mode, change the Docker CMD to be /start-worker.sh instead of the default /start-web.sh.
 
-You will need to ship your own worker supervisord jobs by adding these to /etc/supervisord-enabled/ in your Dockerfile for your worker. Any .conf files in that directory will be picked up by supervisord.
+You will need to ship your own worker supervisord jobs by adding these to /etc/supervisord-worker/ in your Dockerfile for your worker. Any .conf files in that directory will be picked up by supervisord to run when in worker mode.
 
 An example of one of these files is provided below - feel free to amend as appropriate:
 
 ```
-[program:php artisan queue:work]
-command=/usr/bin/php artisan queue:work 
+[program:php artisan queue:listen]
+command=/usr/bin/php artisan queue:listen 
 directory=/src
 autostart=true
 autorestart=true
