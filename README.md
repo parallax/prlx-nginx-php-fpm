@@ -29,6 +29,7 @@ For help running these locally with docker run see the [docker run reference](ht
 | DISABLE_MONITORING   | Set to any value (1, true, etc) to disable all monitoring functionality (see ports/services)                    | ✖        | ✓   | ✖      |
 | NGINX_WEB_ROOT       | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths! | ✖        | ✓   | ✖      |
 | PHP_MEMORY_MAX       | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                         | ✖        | ✓   | ✓      |
+| PHP_FPM_WORKERS      | Maximum PHP-FPM workers. Defaults to 2 if not set.                                                              | ✖        | ✓   | ✖      |
 | DISABLE_OPCACHE      | Set to any value (1, true, etc) to disable PHP Opcache                                                          | ✖        | ✓   | ✓      |
 | DISABLE_CRON         | Set to any value (1, true, etc) to disable Cron. Only runs on the worker!                                       | ✖        | ✖   | ✓      |
 
