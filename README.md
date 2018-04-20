@@ -31,6 +31,7 @@ For help running these locally with docker run see the [docker run reference](ht
 | PHP_MEMORY_MAX       | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                         | ✖        | ✓   | ✓      |
 | PHP_FPM_WORKERS      | Maximum PHP-FPM workers. Defaults to 2 if not set.                                                              | ✖        | ✓   | ✖      |
 | DISABLE_OPCACHE      | Set to any value (1, true, etc) to disable PHP Opcache                                                          | ✖        | ✓   | ✓      |
+| PHP_OPCACHE_MEMORY   | Maximum PHP request memory, in megabytes (i.e. '64'). Defaults to 16.                                           | ✖        | ✓   | ✓      |
 | DISABLE_CRON         | Set to any value (1, true, etc) to disable Cron. Only runs on the worker!                                       | ✖        | ✖   | ✓      |
 
 # The web mode/command
