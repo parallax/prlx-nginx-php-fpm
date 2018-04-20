@@ -77,12 +77,12 @@ fi
 if [ ! -z "$PHP_OPCACHE_MEMORY" ]; then
     
     # Set PHP.ini accordingly
-    sed -i -e "s#opcache.memory_consumption=16#opcache.memory_consumption=${PHP_MEMORY_MAX}#g" /etc/php/php.ini
+    sed -i -e "s#opcache.memory_consumption=16#opcache.memory_consumption=${PHP_OPCACHE_MEMORY}#g" /etc/php/php.ini
 
 fi
 
 # Print the real value
-printf "%-30s %-30s\n" "PHP Memory Max:" "`php -r 'echo ini_get("opcache.memory_consumption");'`M"
+printf "%-30s %-30s\n" "Opcache Memory Max:" "`php -r 'echo ini_get("opcache.memory_consumption");'`M"
 
 # Cron
 # If DISABLE_CRON is set:
