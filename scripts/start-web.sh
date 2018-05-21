@@ -114,6 +114,31 @@ if [ ! -z "$DISABLE_OPCACHE" ]; then
 
 fi
 
+# PHP Opcache Memory
+# If set
+if [ ! -z "$PHP_OPCACHE_MEMORY" ]; then
+    
+    # Set PHP.ini accordingly
+    sed -i -e "s#opcache.memory_consumption=16#opcache.memory_consumption=${PHP_OPCACHE_MEMORY}#g" /etc/php/php.ini
+
+fi
+
+# Print the real value
+printf "%-30s %-30s\n" "Opcache Memory Max:" "`php -r 'echo ini_get("opcache.memory_consumption");'`M"
+
+# PHP-FPM Max Workers
+# If set
+if [ ! -z "$PHP_FPM_WORKERS" ]; then
+        
+    # Set PHP.ini accordingly
+    sed -i -e "s#pm.max_children = 2#pm.max_children = $PHP_FPM_WORKERS#g" /etc/php/php-fpm.d/www.conf
+
+fi
+
+# Print the value
+printf "%-30s %-30s\n" "PHP-FPM Max Workers:" "`cat /etc/php/php-fpm.d/www.conf | grep 'pm.max_children = ' | sed -e 's/pm.max_children = //g'`"
+# End PHP-FPM
+
 printf "\n\033[1;1mStarting supervisord\033[0m\n\n"
 
 # Start supervisord and services

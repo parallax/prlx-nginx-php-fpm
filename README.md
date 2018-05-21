@@ -30,7 +30,9 @@ For help running these locally with docker run see the [docker run reference](ht
 | DISABLE_MONITORING   | Set to any value (1, true, etc) to disable all monitoring functionality (see ports/services)                    | ✖        | ✓   | ✖      |
 | NGINX_WEB_ROOT       | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths! | ✖        | ✓   | ✖      |
 | PHP_MEMORY_MAX       | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                         | ✖        | ✓   | ✓      |
+| PHP_FPM_WORKERS      | Maximum PHP-FPM workers. Defaults to 2 if not set.                                                              | ✖        | ✓   | ✖      |
 | DISABLE_OPCACHE      | Set to any value (1, true, etc) to disable PHP Opcache                                                          | ✖        | ✓   | ✓      |
+| PHP_OPCACHE_MEMORY   | Maximum PHP request memory, in megabytes (i.e. '64'). Defaults to 16.                                           | ✖        | ✓   | ✓      |
 | DISABLE_CRON         | Set to any value (1, true, etc) to disable Cron. Only runs on the worker!                                       | ✖        | ✖   | ✓      |
 
 # The web mode/command
@@ -75,13 +77,13 @@ The worker mode is used when you want to run a worker-type task in this containe
 
 To run in this mode, change the Docker CMD to be /start-worker.sh instead of the default /start-web.sh.
 
-You will need to ship your own worker supervisord jobs by adding these to /etc/supervisord-enabled/ in your Dockerfile for your worker. Any .conf files in that directory will be picked up by supervisord.
+You will need to ship your own worker supervisord jobs by adding these to /etc/supervisord-worker/ in your Dockerfile for your worker. Any .conf files in that directory will be picked up by supervisord to run when in worker mode.
 
 An example of one of these files is provided below - feel free to amend as appropriate:
 
 ```
-[program:php artisan queue:work]
-command=/usr/bin/php artisan queue:work 
+[program:laravel-queue]
+command=/usr/bin/php artisan queue:listen 
 directory=/src
 autostart=true
 autorestart=true
@@ -132,6 +134,7 @@ Example:
 | libxml        | ✓   | ✓   | ✓   |                                                                                         |
 | mbstring      | ✓   | ✓   | ✓   |                                                                                         |
 | mcrypt        | ✓   | ✓   | ✖   | Deprecated in PHP 7.2 and up                                                            |
+| memcached     | ✖   | ✓   | ✓   |                                                                                         |
 | mysqli        | ✓   | ✓   | ✓   |                                                                                         |
 | mysqlnd       | ✓   | ✓   | ✓   |                                                                                         |
 | newrelic      | ✓   | ✓   | ✓   |                                                                                         |

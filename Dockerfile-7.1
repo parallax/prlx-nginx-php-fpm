@@ -162,19 +162,13 @@ RUN chown -R nobody:nobody /var/cache/nginx/client_temp && \
  chown -R nobody:nobody /var/cache/nginx/uwsgi_temp && \
  chown -R nobody:nobody /var/cache/nginx/scgi_temp
 
-# php-fpm-exporter for prometheus
-ADD https://github.com/bakins/php-fpm-exporter/releases/download/v0.3.3/php-fpm-exporter.linux.amd64 /usr/local/bin/php-fpm-exporter
+# php-fpm-exporter for prometheus - https://github.com/bakins/php-fpm-exporter
+ADD dependencies/php-fpm-exporter.linux.amd64 /usr/local/bin/php-fpm-exporter
 
 RUN chmod +x /usr/local/bin/php-fpm-exporter
 
-# nginx exporter for prometheus
-ADD https://github.com/hnlq715/nginx-vts-exporter/releases/download/v0.9.1/nginx-vts-exporter-0.9.1.linux-amd64.tar.gz /tmp/nginx-exporter
-
-RUN cd /tmp && \
-  gzip -dc /tmp/nginx-exporter | tar xf - && \
-  cd /tmp/nginx-vts-* && \
-  chmod +x nginx-vts-exporter && \
-  mv nginx-vts-exporter /usr/local/bin/nginx-vts-exporter
+# nginx exporter for prometheus - https://github.com/hnlq715/nginx-vts-exporter
+ADD dependencies/nginx-vts-exporter /usr/local/bin/nginx-vts-exporter
 
 RUN chmod +x /usr/local/bin/nginx-vts-exporter
 
@@ -184,6 +178,7 @@ ADD https://php.codecasts.rocks/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.
 RUN apk add --no-cache \
   php7@php \
   php7-common@php \
+  php7-memcached@php \
   php7-curl@php \
   php7-dom@php \
   php7-exif@php \
@@ -257,7 +252,7 @@ RUN wget https://download.newrelic.com/php_agent/release/newrelic-php5-8.0.0.204
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
 ADD conf/supervisor.d /etc/supervisor.d
-RUN mkdir -p /etc/supervisord-enabled
+RUN mkdir -p /etc/supervisord-enabled && mkdir -p /etc/supervisord-worker
 
 # Scripts
 ADD scripts/start-web.sh /start-web.sh

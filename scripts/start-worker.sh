@@ -72,6 +72,18 @@ if [ ! -z "$DISABLE_OPCACHE" ]; then
 
 fi
 
+# PHP Opcache Memory
+# If set
+if [ ! -z "$PHP_OPCACHE_MEMORY" ]; then
+    
+    # Set PHP.ini accordingly
+    sed -i -e "s#opcache.memory_consumption=16#opcache.memory_consumption=${PHP_OPCACHE_MEMORY}#g" /etc/php/php.ini
+
+fi
+
+# Print the real value
+printf "%-30s %-30s\n" "Opcache Memory Max:" "`php -r 'echo ini_get("opcache.memory_consumption");'`M"
+
 # Cron
 # If DISABLE_CRON is set:
 if [ ! -z "$DISABLE_CRON" ]; then
@@ -90,6 +102,9 @@ if [ -z "$DISABLE_CRON" ]; then
     cp /etc/supervisor.d/cron.conf /etc/supervisord-enabled/
 
 fi
+
+# Enable the worker-specific supervisor files
+cp /etc/supervisord-worker/* /etc/supervisord-enabled/
 
 printf "\n\033[1;1mStarting supervisord\033[0m\n\n"
 
