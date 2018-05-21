@@ -7,6 +7,7 @@
 | PHP           | Nginx         | Docker tag                    |
 | ------------- | ------------- | -------------                 |
 | 5.6           | 1.13.9        | prlx/prlx-nginx-php-fpm:5.6   |
+| 7.0           | 1.13.9        | prlx/prlx-nginx-php-fpm:7.0   |
 | 7.1           | 1.13.9        | prlx/prlx-nginx-php-fpm:7.1   |
 | 7.2           | 1.13.9        | prlx/prlx-nginx-php-fpm:7.2   |
 
