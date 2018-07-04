@@ -135,6 +135,7 @@ Example:
 | mcrypt        | ✓   | ✓   | ✖   | Deprecated in PHP 7.2 and up                                                            |
 | memcached     | ✖   | ✓   | ✓   |                                                                                         |
 | mysqli        | ✓   | ✓   | ✓   |                                                                                         |
+| mysql         | ✓   | ✖   | ✖   | Deprecated in PHP 7 and up                                                              |
 | mysqlnd       | ✓   | ✓   | ✓   |                                                                                         |
 | newrelic      | ✓   | ✓   | ✓   |                                                                                         |
 | openssl       | ✓   | ✓   | ✓   |                                                                                         |
