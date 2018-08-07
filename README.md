@@ -133,7 +133,7 @@ Example:
 | libxml        | ✓   | ✓   | ✓   |                                                                                         |
 | mbstring      | ✓   | ✓   | ✓   |                                                                                         |
 | mcrypt        | ✓   | ✓   | ✖   | Deprecated in PHP 7.2 and up                                                            |
-| memcached     | ✖   | ✓   | ✓   |                                                                                         |
+| memcached     | ✓   | ✓   | ✓   |                                                                                         |
 | mysqli        | ✓   | ✓   | ✓   |                                                                                         |
 | mysql         | ✓   | ✖   | ✖   | Deprecated in PHP 7 and up                                                              |
 | mysqlnd       | ✓   | ✓   | ✓   |                                                                                         |

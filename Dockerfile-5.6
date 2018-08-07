@@ -207,6 +207,13 @@ RUN apk add --no-cache \
   php5-intl \ 
   php5-fpm
 
+# Memcached
+RUN apk add --no-cache libmemcached
+RUN apk --no-cache add ca-certificates && \
+  wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-php5-memcached/master/sgerrand.rsa.pub && \
+  wget https://github.com/sgerrand/alpine-pkg-php5-memcached/releases/download/2.2.0-r0/php5-memcached-2.2.0-r0.apk && \
+  apk add php5-memcached-2.2.0-r0.apk && rm -f php5-memcached-2.2.0-r0.apk
+
 # These only exist in versions prior to 7.2
 RUN apk add --no-cache php5-mcrypt \
   php5-xmlrpc php5-mysqli php5-mysql
@@ -219,7 +226,8 @@ RUN apk --no-cache add ca-certificates wget && \
   wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-php5-imagick/master/sgerrand.rsa.pub && \
   wget https://github.com/sgerrand/alpine-pkg-php5-imagick/releases/download/3.4.3-r0/php5-imagick-3.4.3-r0.apk && \
   apk add php5-imagick-3.4.3-r0.apk && \
-  apk del imagemagick-dev
+  apk del imagemagick-dev && \
+  rm -f php5-imagick-3.4.3-r0.apk
 
 # Imagick support file types
 RUN apk add --no-cache imagemagick
@@ -228,7 +236,8 @@ RUN apk add --no-cache imagemagick
 RUN apk --no-cache add ca-certificates wget && \
   wget --quiet --output-document=/etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
   wget https://github.com/sgerrand/alpine-pkg-php5-redis/releases/download/3.1.6-r0/php5-redis-3.1.6-r0.apk && \
-  apk add php5-redis-3.1.6-r0.apk
+  apk add php5-redis-3.1.6-r0.apk && \
+  rm -f php5-redis-3.1.6-r0.apk
 
 RUN mkdir -p /src && \
   ln -s /etc/php5 /etc/php && \
