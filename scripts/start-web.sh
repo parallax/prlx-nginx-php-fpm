@@ -45,27 +45,55 @@ if [ -z "$NEWRELIC_LICENSE_KEY" ]; then
 
     # Disabled
     printf "%-30s %-30s\n" "New Relic:" "Disabled"
+    rm -f /etc/php7/conf.d/newrelic.ini
 
 fi
 
-# If DISABLE_MONITORING is set:
-if [ ! -z "$DISABLE_MONITORING" ]; then
+# Atatus - if api key is set then configure and enable
+if [ ! -z "$ATATUS_API_KEY" ]; then
 
     # Disabled
-    printf "%-30s %-30s\n" "Monitoring:" "Disabled"
+    printf "%-30s %-30s\n" "Atatus:" "Enabled"
 
-    rm -f /etc/nginx/sites-enabled/status.conf
+    # Set the atatus api key
+    sed -i -e "s/atatus.api_key = \"\"/atatus.api_key = \"$ATATUS_API_KEY\"/g" /etc/php/conf.d/atatus.ini
 
 fi
 
-# If not set, enable monitoring:
-if [ -z "$DISABLE_MONITORING" ]; then
+# Atatus - if api key is not set then disable
+if [ -z "$ATATUS_API_KEY" ]; then
+
+    # Enabled
+    printf "%-30s %-30s\n" "Atatus:" "Disabled"
+    rm -f /etc/php7/conf.d/atatus.ini
+
+fi
+
+if [ -z "$NEWRELIC_LICENSE_KEY" ]; then
+
+    # Disabled
+    printf "%-30s %-30s\n" "New Relic:" "Disabled"
+
+fi
+
+# If ENABLE_MONITORING is set:
+if [ ! -z "$ENABLE_MONITORING" ]; then
 
     # Enabled
     printf "%-30s %-30s\n" "Monitoring:" "Enabled"
 
     cp /etc/supervisor.d/nginx-exporter.conf /etc/supervisord-enabled/
     cp /etc/supervisor.d/php-fpm-exporter.conf /etc/supervisord-enabled/
+
+fi
+
+# If not set, enable monitoring:
+if [ -z "$ENABLE_MONITORING" ]; then
+
+    # Disabled
+    printf "%-30s %-30s\n" "Monitoring:" "Disabled"
+
+    rm -f /etc/nginx/sites-enabled/status.conf
 
 fi
 
@@ -125,6 +153,23 @@ fi
 
 # Print the real value
 printf "%-30s %-30s\n" "Opcache Memory Max:" "`php -r 'echo ini_get("opcache.memory_consumption");'`M"
+
+# Max Execution Time
+# If set
+if [ ! -z "$MAX_EXECUTION_TIME" ]; then
+    
+    # Set PHP.ini accordingly
+    sed -i -e "s#max_execution_time = 600#max_execution_time = ${MAX_EXECUTION_TIME}#g" /etc/php/php.ini
+
+    # Modify the nginx read timeout
+    sed -i -e "s#fastcgi_read_timeout 600s;#fastcgi_read_timeout ${MAX_EXECUTION_TIME}s;#g" /etc/nginx/sites-enabled/site.conf
+fi
+
+# Print the value
+printf "%-30s %-30s\n" "Nginx Max Read:" "`cat /etc/nginx/sites-enabled/site.conf | grep 'fastcgi_read_timeout' | sed -e 's/fastcgi_read_timeout//g'`"
+
+# Print the value
+printf "%-30s %-30s\n" "PHP Max Execution Time:" "`cat /etc/php/php.ini | grep 'max_execution_time = ' | sed -e 's/max_execution_time = //g'`"
 
 # PHP-FPM Max Workers
 # If set
