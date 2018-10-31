@@ -46,6 +46,7 @@ if [ -z "$NEWRELIC_LICENSE_KEY" ]; then
     # Disabled
     printf "%-30s %-30s\n" "New Relic:" "Disabled"
     rm -f /etc/php7/conf.d/newrelic.ini
+    rm -f /etc/supervisor.d/newrelic.conf
 
 fi
 
@@ -69,12 +70,6 @@ if [ -z "$ATATUS_API_KEY" ]; then
 
 fi
 
-if [ -z "$NEWRELIC_LICENSE_KEY" ]; then
-
-    # Disabled
-    printf "%-30s %-30s\n" "New Relic:" "Disabled"
-
-fi
 
 # If ENABLE_MONITORING is set:
 if [ ! -z "$ENABLE_MONITORING" ]; then
