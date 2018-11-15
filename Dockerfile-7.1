@@ -225,7 +225,7 @@ RUN mkdir -p /src && \
 RUN curl https://getcomposer.org/installer -o /tmp/composer-installer && php /tmp/composer-installer --install-dir=/usr/local/bin --filename=composer && rm -f /tmp/composer-installer
 
 # Atatus
-RUN wget https://s3.amazonaws.com/atatus-artifacts/atatus-php/downloads/atatus-php-1.4.0-d2-x64-musl.tar.gz && tar -xzvf atatus-php-1.4.0-d2-x64-musl.tar.gz && cd atatus-php-1.4.0-d2-x64-musl && ./install.sh && cd .. && rm -rf atatus-php*
+RUN wget https://s3.amazonaws.com/atatus-artifacts/atatus-php/downloads/atatus-php-1.4.0-d2-x64-musl.tar.gz && tar -xzvf atatus-php-1.4.0-d2-x64-musl.tar.gz && cd atatus-php-1.4.0-d2-x64-musl && ./install.sh && cd .. && rm -rf atatus-php* && mkdir -p /atatus-run && chown nobody:nobody /atatus-run 
 
 # Atatus configurations
 RUN sed -i -e 's#atatus.agent.log_level = "warning"#atatus.agent.log_level = "debug"#g' /etc/php/conf.d/atatus.ini && \
