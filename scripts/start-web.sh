@@ -14,83 +14,44 @@ printf "%-30s %-30s\n" "Site:" "$SITE_NAME"
 printf "%-30s %-30s\n" "Branch:" "$SITE_BRANCH"
 printf "%-30s %-30s\n" "Environment:" "$ENVIRONMENT"
 
-# Version numbers:
-printf "%-30s %-30s\n" "PHP Version:" "`php -r 'echo phpversion();'`"
-printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"
-
 # Enable Nginx
 cp /etc/supervisor.d/nginx.conf /etc/supervisord-enabled/
 
 # Enable PHP-FPM
 cp /etc/supervisor.d/php-fpm.conf /etc/supervisord-enabled/
 
-# New Relic - if license key is set then configure and enable
-if [ ! -z "$NEWRELIC_LICENSE_KEY" ]; then
-
-    # Enabled
-    printf "%-30s %-30s\n" "New Relic:" "Enabled"
-
-    # Set the newrelic app name programatically with the info we already have in the container
-    sed -i -e "s/newrelic.appname = \"PHP Application\"/newrelic.appname = \"${SITE_NAME}-${SITE_BRANCH}-${ENVIRONMENT}\"/g" /etc/php/conf.d/newrelic.ini
-
-    # Set the newrelic license key
-    sed -i -e "s/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/$NEWRELIC_LICENSE_KEY/g" /etc/php/conf.d/newrelic.ini
-
-    # Enable New Relic
-    cp /etc/supervisor.d/newrelic.conf /etc/supervisord-enabled/
-
-fi
-
-if [ -z "$NEWRELIC_LICENSE_KEY" ]; then
-
-    # Disabled
-    printf "%-30s %-30s\n" "New Relic:" "Disabled"
-    rm -f /etc/php7/conf.d/newrelic.ini
-    rm -f /etc/supervisor.d/newrelic.conf
-
-fi
-
 # Atatus - if api key is set then configure and enable
 if [ ! -z "$ATATUS_API_KEY" ]; then
 
-    # Disabled
+    # Enabled
     printf "%-30s %-30s\n" "Atatus:" "Enabled"
 
     # Set the atatus api key
     sed -i -e "s/atatus.api_key = \"\"/atatus.api_key = \"$ATATUS_API_KEY\"/g" /etc/php/conf.d/atatus.ini
+
+    # Set the release stage to be the environment
+    sed -i -e "s/atatus.release_stage = \"production\"/atatus.release_stage = \"$ENVIRONMENT\"/g" /etc/php/conf.d/atatus.ini
+
+    # Set the app version to be the build
+    sed -i -e "s/atatus.app_version = \"\"/atatus.app_version = \"$BUILD\"/g" /etc/php/conf.d/atatus.ini
+
+    # Set the tags to contain useful data
+    sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_NAME, $ENVIRONMENT, $BUILD, $SITE_BRANCH\"/g" /etc/php/conf.d/atatus.ini
 
 fi
 
 # Atatus - if api key is not set then disable
 if [ -z "$ATATUS_API_KEY" ]; then
 
-    # Enabled
-    printf "%-30s %-30s\n" "Atatus:" "Disabled"
-    rm -f /etc/php7/conf.d/atatus.ini
-
-fi
-
-
-# If ENABLE_MONITORING is set:
-if [ ! -z "$ENABLE_MONITORING" ]; then
-
-    # Enabled
-    printf "%-30s %-30s\n" "Monitoring:" "Enabled"
-
-    cp /etc/supervisor.d/nginx-exporter.conf /etc/supervisord-enabled/
-    cp /etc/supervisor.d/php-fpm-exporter.conf /etc/supervisord-enabled/
-
-fi
-
-# If not set, enable monitoring:
-if [ -z "$ENABLE_MONITORING" ]; then
-
     # Disabled
-    printf "%-30s %-30s\n" "Monitoring:" "Disabled"
-
-    rm -f /etc/nginx/sites-enabled/status.conf
+    printf "%-30s %-30s\n" "Atatus:" "Disabled"
+    rm -f /etc/php/conf.d/atatus.ini
 
 fi
+
+# Version numbers:
+printf "%-30s %-30s\n" "PHP Version:" "`php -r 'echo phpversion();'`"
+printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"
 
 if [ ! -z "$NGINX_WEB_ROOT" ]; then
 
