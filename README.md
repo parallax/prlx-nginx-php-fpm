@@ -4,11 +4,11 @@
 
 ## Docker Tags 
 
-| PHP           | Nginx         | Docker tag                    |
-| ------------- | ------------- | -------------                 |
-| 5.6           | 1.13.9        | prlx/prlx-nginx-php-fpm:5.6   |
-| 7.1           | 1.13.9        | prlx/prlx-nginx-php-fpm:7.1   |
-| 7.2           | 1.13.9        | prlx/prlx-nginx-php-fpm:7.2   |
+| PHP           | Nginx         | Docker tag                           |
+| ------------- | ------------- | -------------                        |
+| 5.6           | 1.13.9        | prlx/prlx-nginx-php-fpm:5.6-master   |
+| 7.1           | 1.13.9        | prlx/prlx-nginx-php-fpm:7.1-master   |
+| 7.2           | 1.13.9        | prlx/prlx-nginx-php-fpm:7.2-master   |
 
 [Browse all tags on Docker Hub](https://hub.docker.com/r/prlx/prlx-nginx-php-fpm/tags/)
 
