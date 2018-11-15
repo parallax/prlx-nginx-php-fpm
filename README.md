@@ -25,7 +25,6 @@ For help running these locally with docker run see the [docker run reference](ht
 | SITE_NAME            | The name of your project, i.e. 'mywebsite'. Used by NR for app name.                                            | ✓        | ✓   | ✓      |
 | SITE_BRANCH          | The running branch of your project, i.e. 'master'. Used by NR for app name.                                     | ✓        | ✓   | ✓      |
 | ENVIRONMENT          | The environment you're running in, i.e. 'qa' or 'production'. Used by NR for app name.                          | ✓        | ✓   | ✓      |
-| NEWRELIC_LICENSE_KEY | Your New Relic license key. New Relic won't be used if this is not set.                                         | ✖        | ✓   | ✓      |
 | ATATUS_API_KEY       | Your Atatus Project API key. Atatus won't be used if this is not set.                                           | ✖        | ✓   | ✓      |
 | ENABLE_MONITORING    | Set to any value (1, true, etc) to enable all monitoring functionality (see ports/services)                     | ✖        | ✓   | ✖      |
 | NGINX_WEB_ROOT       | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths! | ✖        | ✓   | ✖      |
