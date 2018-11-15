@@ -2,7 +2,7 @@ FROM alpine:3.7
 
 ENV PHP_VERSION 7.1
 
-RUN apk add --no-cache bash supervisor
+RUN apk add --no-cache bash supervisor curl
 
 RUN apk --no-cache add ca-certificates openssl && \
   echo "@php https://php.codecasts.rocks/v3.7/php-$PHP_VERSION" >> /etc/apk/repositories
@@ -222,8 +222,7 @@ RUN mkdir -p /src && \
   ln -s /usr/sbin/php-fpm7 /usr/bin/php-fpm
 
 # Add Composer
-ADD https://getcomposer.org/installer /tmp/composer-installer
-RUN php /tmp/composer-installer --install-dir=/usr/local/bin --filename=composer
+RUN curl https://getcomposer.org/installer -o /tmp/composer-installer && php /tmp/composer-installer --install-dir=/usr/local/bin --filename=composer && rm -f /tmp/composer-installer
 
 # Atatus
 RUN wget https://s3.amazonaws.com/atatus-artifacts/atatus-php/downloads/atatus-php-1.4.0-d2-x64-musl.tar.gz && tar -xzvf atatus-php-1.4.0-d2-x64-musl.tar.gz && cd atatus-php-1.4.0-d2-x64-musl && ./install.sh && cd .. && rm -rf atatus-php*
