@@ -89,6 +89,26 @@ fi
 # Print the real value
 printf "%-30s %-30s\n" "Opcache Memory Max:" "`php -r 'echo ini_get("opcache.memory_consumption");'`M"
 
+# PHP Session Config
+# If set
+if [ ! -z "$PHP_SESSION_STORE" ]; then
+    
+    # Figure out which session save handler is in use, currently only supports redis
+    if [ $PHP_SESSION_STORE == 'redis' ] || [ $PHP_SESSION_STORE == 'REDIS' ]; then
+        if [ -z $PHP_SESSION_STORE_REDIS_HOST ]; then
+            PHP_SESSION_STORE_REDIS_HOST='redis'
+        fi
+        if [ -z $PHP_SESSION_STORE_REDIS_PORT ]; then
+            PHP_SESSION_STORE_REDIS_PORT='6379'
+        fi
+        printf "%-30s %-30s\n" "PHP Sessions:" "Redis"
+        printf "%-30s %-30s\n" "PHP Redis Host:" "$PHP_SESSION_STORE_REDIS_HOST"
+        printf "%-30s %-30s\n" "PHP Redis Port:" "$PHP_SESSION_STORE_REDIS_PORT"
+        sed -i -e "s#session.save_handler = files#session.save_handler = redis\nsession.save_path = \"tcp://$PHP_SESSION_STORE_REDIS_HOST:$PHP_SESSION_STORE_REDIS_PORT\"#g" /etc/php/php.ini
+    fi
+
+fi
+
 # Cron
 # If DISABLE_CRON is set:
 if [ ! -z "$DISABLE_CRON" ]; then
