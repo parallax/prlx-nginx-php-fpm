@@ -39,7 +39,7 @@ if [ ! -z "$ATATUS_APM_LICENSE_KEY" ]; then
     sed -i -e "s/atatus.app_version = \"\"/atatus.app_version = \"$SITE_BRANCH-$BUILD\"/g" /etc/php/conf.d/atatus.ini
 
     # Set the tags to contain useful data
-    sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_BRANCH-$BUILD\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_BRANCH-$BUILD, $SITE_BRANCH\"/g" /etc/php/conf.d/atatus.ini
 
 fi
 
