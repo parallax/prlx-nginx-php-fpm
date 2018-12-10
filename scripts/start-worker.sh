@@ -15,27 +15,30 @@ printf "%-30s %-30s\n" "Branch:" "$SITE_BRANCH"
 printf "%-30s %-30s\n" "Environment:" "$ENVIRONMENT"
 
 # Atatus - if api key is set then configure and enable
-if [ ! -z "$ATATUS_API_KEY" ]; then
+if [ ! -z "$ATATUS_APM_LICENSE_KEY" ]; then
 
     # Enabled
     printf "%-30s %-30s\n" "Atatus:" "Enabled"
 
     # Set the atatus api key
-    sed -i -e "s/atatus.api_key = \"\"/atatus.api_key = \"$ATATUS_API_KEY\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.license_key = \"\"/atatus.license_key = \"$ATATUS_LICENSE_KEY\"/g" /etc/php/conf.d/atatus.ini
 
     # Set the release stage to be the environment
     sed -i -e "s/atatus.release_stage = \"production\"/atatus.release_stage = \"$ENVIRONMENT\"/g" /etc/php/conf.d/atatus.ini
 
-    # Set the app version to be the build
-    sed -i -e "s/atatus.app_version = \"\"/atatus.app_version = \"$BUILD\"/g" /etc/php/conf.d/atatus.ini
+    # Set the app name to be site_name environment
+    sed -i -e "s/atatus.app_name = \"PHP App\"/atatus.app_name = \"$SITE_NAME $ENVIRONMENT\"/g" /etc/php/conf.d/atatus.ini
+
+    # Set the app version to be the branch build
+    sed -i -e "s/atatus.app_version = \"\"/atatus.app_version = \"$SITE_BRANCH $BUILD\"/g" /etc/php/conf.d/atatus.ini
 
     # Set the tags to contain useful data
-    sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_NAME, $ENVIRONMENT, $BUILD, $SITE_BRANCH\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_BRANCH $BUILD\"/g" /etc/php/conf.d/atatus.ini
 
 fi
 
 # Atatus - if api key is not set then disable
-if [ -z "$ATATUS_API_KEY" ]; then
+if [ -z "$ATATUS_APM_LICENSE_KEY" ]; then
 
     # Disabled
     printf "%-30s %-30s\n" "Atatus:" "Disabled"
