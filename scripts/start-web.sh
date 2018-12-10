@@ -33,13 +33,13 @@ if [ ! -z "$ATATUS_APM_LICENSE_KEY" ]; then
     sed -i -e "s/atatus.release_stage = \"production\"/atatus.release_stage = \"$ENVIRONMENT\"/g" /etc/php/conf.d/atatus.ini
 
     # Set the app name to be site_name environment
-    sed -i -e "s/atatus.app_name = \"PHP App\"/atatus.app_name = \"$SITE_NAME $ENVIRONMENT\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.app_name = \"PHP App\"/atatus.app_name = \"$SITE_NAME\"/g" /etc/php/conf.d/atatus.ini
 
     # Set the app version to be the branch build
-    sed -i -e "s/atatus.app_version = \"\"/atatus.app_version = \"$SITE_BRANCH $BUILD\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.app_version = \"\"/atatus.app_version = \"$SITE_BRANCH-$BUILD\"/g" /etc/php/conf.d/atatus.ini
 
     # Set the tags to contain useful data
-    sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_BRANCH $BUILD\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_BRANCH-$BUILD\"/g" /etc/php/conf.d/atatus.ini
 
 fi
 
