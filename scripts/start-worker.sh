@@ -21,7 +21,7 @@ if [ ! -z "$ATATUS_APM_LICENSE_KEY" ]; then
     printf "%-30s %-30s\n" "Atatus:" "Enabled"
 
     # Set the atatus api key
-    sed -i -e "s/atatus.license_key = \"\"/atatus.license_key = \"$ATATUS_LICENSE_KEY\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.license_key = \"\"/atatus.license_key = \"$ATATUS_APM_LICENSE_KEY\"/g" /etc/php/conf.d/atatus.ini
 
     # Set the release stage to be the environment
     sed -i -e "s/atatus.release_stage = \"production\"/atatus.release_stage = \"$ENVIRONMENT\"/g" /etc/php/conf.d/atatus.ini
