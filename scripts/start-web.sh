@@ -56,6 +56,15 @@ fi
 printf "%-30s %-30s\n" "PHP Version:" "`php -r 'echo phpversion();'`"
 printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"
 
+if [ ! -z "$NGINX_PORT" ]; then
+    printf "%-30s %-30s\n" "Nginx Port:" "$PORT"
+    sed -i -e "s#listen 80#listen $PORT#g" /etc/nginx/sites-enabled/site.conf
+fi
+
+if [ -z "$NGINX_PORT" ]; then
+    printf "%-30s %-30s\n" "Nginx Port:" "80"
+fi
+
 if [ ! -z "$NGINX_WEB_ROOT" ]; then
 
     # Replace web root

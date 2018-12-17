@@ -27,6 +27,7 @@ For help running these locally with docker run see the [docker run reference](ht
 | ENVIRONMENT                     | The environment you're running in, i.e. 'qa' or 'production'. Used by NR for app name.                          | ✓        | ✓   | ✓      |
 | ATATUS_API_KEY                  | Your Atatus Project API key. Atatus won't be used if this is not set.                                           | ✖        | ✓   | ✓      |
 | ENABLE_MONITORING               | Set to any value (1, true, etc) to enable all monitoring functionality (see ports/services)                     | ✖        | ✓   | ✖      |
+| NGINX_PORT                      | Defaults to 80                                                                                                  | ✖        | ✓   | ✖      |
 | NGINX_WEB_ROOT                  | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths! | ✖        | ✓   | ✖      |
 | PHP_MEMORY_MAX                  | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                         | ✖        | ✓   | ✓      |
 | MAX_EXECUTION_TIME              | Maximum PHP and Nginx execution/fastcgi read timeout	                                                        | ✖        | ✓   | ✓      |
@@ -91,7 +92,7 @@ You can add behaviour to the built-in startup scripts for web, worker or both mo
 | ---                | ---     |
 | /startup-all.sh    | All     |
 | /startup-web.sh    | Web     |
-| /startup-worker.sh | Worker  | 
+| /startup-worker.sh | Worker  |
 
 # The worker mode/command
 
