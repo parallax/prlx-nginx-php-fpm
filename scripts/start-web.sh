@@ -159,6 +159,16 @@ if [ ! -z "$PHP_FPM_WORKERS" ]; then
 
 fi
 
+# Nginx custom snippets
+if [ -f /etc/nginx/custom.conf ]; then
+    printf "%-30s %-30s\n" "Custom Nginx Snippet:" "Enabled"
+    /usr/bin/php /usr/local/bin/nginx-custom
+fi
+
+if [ ! -f /etc/nginx/custom.conf ]; then
+    printf "%-30s %-30s\n" "Custom Nginx Snippet:" "Not Found"
+fi
+
 # Print the value
 printf "%-30s %-30s\n" "PHP-FPM Max Workers:" "`cat /etc/php/php-fpm.d/www.conf | grep 'pm.max_children = ' | sed -e 's/pm.max_children = //g'`"
 # End PHP-FPM

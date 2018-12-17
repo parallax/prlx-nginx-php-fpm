@@ -75,6 +75,14 @@ docker run -p 8080:80 example
 
 You should be able to visit the container on http://127.0.0.1:8080/ and see the contents of index.php from /examples/hello-world/src.
 
+# Custom Nginx snippets
+
+The default Nginx configuration is in conf/nginx-site.conf and is copied to /etc/nginx/sites-enabled/site.conf on build.
+
+Historically we've been overwriting this file ad-hoc when other requirements dictate a different config file. This makes for an unwieldly configuration that's hard to change in one place however.
+
+We now support a configuration snippet written to /etc/nginx/custom.conf that will be inserted into the site.conf replacing the ####CUSTOM#### placeholder.
+
 # The worker mode/command
 
 The worker mode is used when you want to run a worker-type task in this container. Usually this means something like php artisan queue:work.
