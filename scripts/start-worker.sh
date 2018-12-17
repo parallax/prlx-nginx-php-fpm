@@ -131,6 +131,17 @@ if [ -z "$DISABLE_CRON" ]; then
 
 fi
 
+# Startup scripts
+if [ -f /startup-all.sh ]; then
+    printf "%-30s %-30s\n" "Startup Script:" "Running"
+    chmod +x /startup-all.sh && ./startup-all.sh
+fi
+
+if [ -f /startup-worker.sh ]; then
+    printf "%-30s %-30s\n" "Worker Startup Script:" "Running"
+    chmod +x /startup-worker.sh && ./startup-worker.sh
+fi
+
 # Enable the worker-specific supervisor files
 cp /etc/supervisord-worker/* /etc/supervisord-enabled/
 

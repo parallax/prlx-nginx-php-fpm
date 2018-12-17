@@ -169,6 +169,17 @@ if [ ! -f /etc/nginx/custom.conf ]; then
     printf "%-30s %-30s\n" "Custom Nginx Snippet:" "Not Found"
 fi
 
+# Startup scripts
+if [ -f /startup-all.sh ]; then
+    printf "%-30s %-30s\n" "Startup Script:" "Running"
+    chmod +x /startup-all.sh && ./startup-all.sh
+fi
+
+if [ -f /startup-web.sh ]; then
+    printf "%-30s %-30s\n" "Web Startup Script:" "Running"
+    chmod +x /startup-web.sh && ./startup-web.sh
+fi
+
 # Print the value
 printf "%-30s %-30s\n" "PHP-FPM Max Workers:" "`cat /etc/php/php-fpm.d/www.conf | grep 'pm.max_children = ' | sed -e 's/pm.max_children = //g'`"
 # End PHP-FPM

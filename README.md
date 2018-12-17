@@ -83,6 +83,16 @@ Historically we've been overwriting this file ad-hoc when other requirements dic
 
 We now support a configuration snippet written to /etc/nginx/custom.conf that will be inserted into the site.conf replacing the ####CUSTOM#### placeholder.
 
+# Custom Startup Scripts
+
+You can add behaviour to the built-in startup scripts for web, worker or both modes by adding a file to:
+
+| File Path          | Runs on |
+| ---                | ---     |
+| /startup-all.sh    | All     |
+| /startup-web.sh    | Web     |
+| /startup-worker.sh | Worker  | 
+
 # The worker mode/command
 
 The worker mode is used when you want to run a worker-type task in this container. Usually this means something like php artisan queue:work.
