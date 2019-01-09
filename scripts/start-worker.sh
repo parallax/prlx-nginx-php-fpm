@@ -131,6 +131,21 @@ if [ -z "$DISABLE_CRON" ]; then
 
 fi
 
+# Set SMTP settings
+if [ $ENVIRONMENT == 'production' ]; then
+    printf "%-30s %-30s\n" "SMTP:" "master-smtp.smtp-production:25"
+    sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/sendmail -t -i -S master-smtp.smtp-production:25#g" /etc/php/php.ini
+    export MAIL_HOST=master-smtp.smtp-production
+    export MAIL_PORT=25
+fi
+
+if [ $ENVIRONMENT == 'qa' ]; then
+    printf "%-30s %-30s\n" "SMTP:" "master-smtp.mailhog-production:25"
+    sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/sendmail -t -i -S master-smtp.mailhog-production:25#g" /etc/php/php.ini
+    export MAIL_HOST=master-smtp.mailhog-qa
+    export MAIL_PORT=25
+fi
+
 # Startup scripts
 if [ -f /startup-all.sh ]; then
     printf "%-30s %-30s\n" "Startup Script:" "Running"
