@@ -193,6 +193,8 @@ if [ $ENVIRONMENT == 'qa' ]; then
     export MAIL_PORT=25
 fi
 
+export MAIL_DRIVER=mail
+
 
 # Startup scripts
 if [ -f /startup-all.sh ]; then
