@@ -142,7 +142,7 @@ fi
 if [ $ENVIRONMENT == 'qa' ]; then
     printf "%-30s %-30s\n" "SMTP:" "master-smtp.mailhog-production:25"
     sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/sendmail -t -i -S master-smtp.mailhog-production:25#g" /etc/php/php.ini
-    export MAIL_HOST=master-smtp.mailhog-qa
+    export MAIL_HOST=master-smtp.mailhog-production
     export MAIL_PORT=25
 fi
 
