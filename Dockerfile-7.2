@@ -62,6 +62,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     --add-module=/usr/src/ngx_http_redis-0.3.9 \
     --add-module=/usr/src/ngx_devel_kit-0.3.0 \
     --add-module=/usr/src/set-misc-nginx-module-0.32 \
+    --add-module=/usr/src/ngx_http_substitutions_filter_module-0.6.4 \
   " \
   && addgroup -S nginx \
   && adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
@@ -83,6 +84,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
   && curl -fSL https://people.freebsd.org/~osa/ngx_http_redis-0.3.9.tar.gz -o http-redis.tar.gz \
   && curl -fSL https://github.com/openresty/set-misc-nginx-module/archive/v0.32.tar.gz -o set-misc.tar.gz \
   && curl -fSL https://github.com/simplresty/ngx_devel_kit/archive/v0.3.0.tar.gz -o ngx_devel_kit.tar.gz \
+  && curl -fSL https://github.com/yaoweibin/ngx_http_substitutions_filter_module/archive/v0.6.4.tar.gz -o ngx_http_substitutions_filter_module.tar.gz \
   && export GNUPGHOME="$(mktemp -d)" \
   && found=''; \
   for server in \
@@ -104,6 +106,8 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
   && rm http-redis.tar.gz \
   && tar -zxC /usr/src -f set-misc.tar.gz \
   && rm set-misc.tar.gz \
+  && tar -zxC /usr/src -f ngx_http_substitutions_filter_module.tar.gz \
+  && rm ngx_http_substitutions_filter_module.tar.gz \
   && tar -zxC /usr/src -f ngx_devel_kit.tar.gz \
   && rm ngx_devel_kit.tar.gz \
   && cd /usr/src/nginx-$NGINX_VERSION \
