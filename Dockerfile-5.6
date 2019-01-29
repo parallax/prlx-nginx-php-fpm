@@ -54,9 +54,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     --with-compat \
     --with-file-aio \
     --with-http_v2_module \
-    --add-module=/usr/src/redis2-nginx-module-0.15 \
-    --add-module=/usr/src/ngx_devel_kit-0.3.0 \
-    --add-module=/usr/src/set-misc-nginx-module-0.32 \
+    --add-module=/usr/src/ngx_http_redis-0.3.9 \
   " \
   && addgroup -S nginx \
   && adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
@@ -75,9 +73,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     geoip-dev \
   && curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
   && curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
-  && curl -fSL https://github.com/openresty/redis2-nginx-module/archive/v0.15.tar.gz -o redis2-nginx-module-0.15.tar.gz \
-  && curl -fSL https://github.com/openresty/set-misc-nginx-module/archive/v0.32.tar.gz -o set-misc.tar.gz \
-  && curl -fSL https://github.com/simplresty/ngx_devel_kit/archive/v0.3.0.tar.gz -o ngx_devel_kit.tar.gz \
+  && curl -fSL https://people.freebsd.org/~osa/ngx_http_redis-0.3.9.tar.gz -o http-redis.tar.gz \
   && export GNUPGHOME="$(mktemp -d)" \
   && found=''; \
   for server in \
@@ -95,12 +91,9 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
   && mkdir -p /usr/src \
   && tar -zxC /usr/src -f nginx.tar.gz \
   && rm nginx.tar.gz \
-  && tar -zxC /usr/src -f redis2-nginx-module-0.15.tar.gz \
-  && rm redis2-nginx-module-0.15.tar.gz \
-  && tar -zxC /usr/src -f set-misc.tar.gz \
-  && rm set-misc.tar.gz \
-  && tar -zxC /usr/src -f ngx_devel_kit.tar.gz \
-  && rm ngx_devel_kit.tar.gz \
+  && tar -zxC /usr/src -f http-redis.tar.gz \
+  && ls -ahls /usr/src/ \
+  && rm http-redis.tar.gz \
   && cd /usr/src/nginx-$NGINX_VERSION \
   && ./configure $CONFIG --with-debug \
   && make -j$(getconf _NPROCESSORS_ONLN) \
