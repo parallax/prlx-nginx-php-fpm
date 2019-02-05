@@ -182,18 +182,32 @@ fi
 if [ $ENVIRONMENT == 'production' ]; then
     printf "%-30s %-30s\n" "SMTP:" "master-smtp.smtp-production:25"
     sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/sendmail -t -i -S master-smtp.smtp-production:25#g" /etc/php/php.ini
-    export MAIL_HOST=master-smtp.smtp-production
-    export MAIL_PORT=25
+    
+    if [ -z "$MAIL_HOST" ]; then
+        export MAIL_HOST=master-smtp.smtp-production
+    fi
+
+    if [ -z "$MAIL_PORT" ]; then
+        export MAIL_PORT=25
+    fi
 fi
 
 if [ $ENVIRONMENT == 'qa' ]; then
     printf "%-30s %-30s\n" "SMTP:" "master-smtp.mailhog-production:25"
     sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/sendmail -t -i -S master-smtp.mailhog-production:25#g" /etc/php/php.ini
-    export MAIL_HOST=master-smtp.mailhog-production
-    export MAIL_PORT=25
+    
+    if [ -z "$MAIL_HOST" ]; then
+        export MAIL_HOST=master-smtp.mailhog-production
+    fi
+
+    if [ -z "$MAIL_PORT" ]; then
+        export MAIL_PORT=25
+    fi
 fi
 
-export MAIL_DRIVER=mail
+if [ -z "$MAIL_DRIVER" ]; then
+    export MAIL_DRIVER=mail
+fi
 
 
 # Startup scripts
