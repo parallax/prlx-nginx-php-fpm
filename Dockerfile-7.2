@@ -9,8 +9,7 @@ RUN apk --no-cache add ca-certificates openssl && \
 
 # Install nginx
 
-ENV NGINX_VERSION 1.15.5
-ENV VTS_VERSION 0.1.15
+ENV NGINX_VERSION 1.15.8
 
 # Add PHP public keys 
 ADD https://php.codecasts.rocks/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
@@ -48,7 +47,6 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     --with-http_xslt_module=dynamic \
     --with-http_image_filter_module=dynamic \
     --with-http_geoip_module=dynamic \
-    --with-http_perl_module=dynamic \
     --with-threads \
     --with-stream \
     --with-stream_ssl_module \
@@ -61,8 +59,13 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     --with-compat \
     --with-file-aio \
     --with-http_v2_module \
-                --add-module=/usr/src/nginx-module-vts-$VTS_VERSION \
+    --add-module=/usr/src/ngx_http_redis-0.3.9 \
+    --add-module=/usr/src/ngx_devel_kit-0.3.0 \
+    --add-module=/usr/src/set-misc-nginx-module-0.32 \
+    --add-module=/usr/src/ngx_http_substitutions_filter_module-0.6.4 \
   " \
+  && addgroup -S nginx \
+  && adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
   && apk add --no-cache --virtual .build-deps \
     gcc \
     libc-dev \
@@ -72,14 +75,16 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     zlib-dev \
     linux-headers \
     curl \
-    gnupg \
+    gnupg1 \
     libxslt-dev \
     gd-dev \
     geoip-dev \
-    perl-dev \
-  && curl -fSL http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
-  && curl -fSL http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
-  && curl -fSL https://github.com/vozlt/nginx-module-vts/archive/v$VTS_VERSION.tar.gz  -o nginx-modules-vts.tar.gz \
+  && curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
+  && curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
+  && curl -fSL https://people.freebsd.org/~osa/ngx_http_redis-0.3.9.tar.gz -o http-redis.tar.gz \
+  && curl -fSL https://github.com/openresty/set-misc-nginx-module/archive/v0.32.tar.gz -o set-misc.tar.gz \
+  && curl -fSL https://github.com/simplresty/ngx_devel_kit/archive/v0.3.0.tar.gz -o ngx_devel_kit.tar.gz \
+  && curl -fSL https://github.com/yaoweibin/ngx_http_substitutions_filter_module/archive/v0.6.4.tar.gz -o ngx_http_substitutions_filter_module.tar.gz \
   && export GNUPGHOME="$(mktemp -d)" \
   && found=''; \
   for server in \
@@ -93,11 +98,18 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
   done; \
   test -z "$found" && echo >&2 "error: failed to fetch GPG key $GPG_KEYS" && exit 1; \
   gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz \
-  && rm -r "$GNUPGHOME" nginx.tar.gz.asc \
+  && rm -rf "$GNUPGHOME" nginx.tar.gz.asc \
   && mkdir -p /usr/src \
   && tar -zxC /usr/src -f nginx.tar.gz \
-  && tar -zxC /usr/src -f nginx-modules-vts.tar.gz \
-  && rm nginx.tar.gz nginx-modules-vts.tar.gz \
+  && rm nginx.tar.gz \
+  && tar -zxC /usr/src -f http-redis.tar.gz \
+  && rm http-redis.tar.gz \
+  && tar -zxC /usr/src -f set-misc.tar.gz \
+  && rm set-misc.tar.gz \
+  && tar -zxC /usr/src -f ngx_http_substitutions_filter_module.tar.gz \
+  && rm ngx_http_substitutions_filter_module.tar.gz \
+  && tar -zxC /usr/src -f ngx_devel_kit.tar.gz \
+  && rm ngx_devel_kit.tar.gz \
   && cd /usr/src/nginx-$NGINX_VERSION \
   && ./configure $CONFIG --with-debug \
   && make -j$(getconf _NPROCESSORS_ONLN) \
@@ -105,7 +117,6 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
   && mv objs/ngx_http_xslt_filter_module.so objs/ngx_http_xslt_filter_module-debug.so \
   && mv objs/ngx_http_image_filter_module.so objs/ngx_http_image_filter_module-debug.so \
   && mv objs/ngx_http_geoip_module.so objs/ngx_http_geoip_module-debug.so \
-  && mv objs/ngx_http_perl_module.so objs/ngx_http_perl_module-debug.so \
   && mv objs/ngx_stream_geoip_module.so objs/ngx_stream_geoip_module-debug.so \
   && ./configure $CONFIG \
   && make -j$(getconf _NPROCESSORS_ONLN) \
@@ -119,7 +130,6 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
   && install -m755 objs/ngx_http_xslt_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so \
   && install -m755 objs/ngx_http_image_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_image_filter_module-debug.so \
   && install -m755 objs/ngx_http_geoip_module-debug.so /usr/lib/nginx/modules/ngx_http_geoip_module-debug.so \
-  && install -m755 objs/ngx_http_perl_module-debug.so /usr/lib/nginx/modules/ngx_http_perl_module-debug.so \
   && install -m755 objs/ngx_stream_geoip_module-debug.so /usr/lib/nginx/modules/ngx_stream_geoip_module-debug.so \
   && ln -s ../../usr/lib/nginx/modules /etc/nginx/modules \
   && strip /usr/sbin/nginx* \
@@ -134,17 +144,19 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
   && mv /usr/bin/envsubst /tmp/ \
   \
   && runDeps="$( \
-    scanelf --needed --nobanner /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
-      | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+    scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
+      | tr ',' '\n' \
       | sort -u \
-      | xargs -r apk info --installed \
-      | sort -u \
+      | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
   )" \
   && apk add --no-cache --virtual .nginx-rundeps $runDeps \
-  && apk add --no-cache logrotate \
   && apk del .build-deps \
   && apk del .gettext \
   && mv /tmp/envsubst /usr/local/bin/ \
+  \
+  # Bring in tzdata so users could set the timezones through the environment
+  # variables
+  && apk add --no-cache tzdata \
   \
   # forward request and error logs to docker log collector
   && ln -sf /dev/stdout /var/log/nginx/access.log \
@@ -250,10 +262,6 @@ RUN nginx -c /etc/nginx/nginx.conf -t
 ADD conf/php-fpm.conf /etc/php/php-fpm.conf
 ADD conf/php.ini /etc/php/php.ini
 ADD conf/php-www.conf /etc/php/php-fpm.d/www.conf
-ADD conf/php-healthz.conf /etc/php/php-fpm.d/healthz.conf
-
-# Healthz endpoint
-ADD /healthz.php /src/public/healthz.php
 
 # Test PHP-FPM
 RUN /usr/bin/php-fpm --fpm-config /etc/php/php-fpm.conf -t
