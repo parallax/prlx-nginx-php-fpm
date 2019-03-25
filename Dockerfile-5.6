@@ -253,10 +253,9 @@ RUN curl https://getcomposer.org/installer -o /tmp/composer-installer && php /tm
 RUN wget https://s3.amazonaws.com/atatus-artifacts/atatus-php/downloads/atatus-php-1.6.0-x64-musl.tar.gz && tar -xzvf atatus-php-1.6.0-x64-musl.tar.gz && cd atatus-php-1.6.0-x64-musl && ./install.sh && cd .. && rm -rf atatus-php* && mkdir -p /atatus-run && chown nobody:nobody /atatus-run 
 
 # Atatus configurations
-RUN sed -i -e 's#atatus.agent.log_level = "warning"#atatus.agent.log_level = "debug"#g' /etc/php/conf.d/atatus.ini && \
-  sed -i -e 's#atatus.collector.log_level = "warning"#atatus.collector.log_level = "debug"#g' /etc/php/conf.d/atatus.ini && \
-  sed -i -e 's#atatus.trace.response_time = 2000#atatus.trace.response_time = 1500#g' /etc/php/conf.d/atatus.ini && \
-  sed -i -e 's#atatus.collector.pidfile = "/var/run/atatus-php-collector.pid"#atatus.collector.pidfile = "/atatus-run/atatus-php-collector.pid"#g' /etc/php/conf.d/atatus.ini
+RUN sed -i -e 's#atatus.trace.response_time = 2000#atatus.trace.response_time = 1500#g' /etc/php/conf.d/atatus.ini && \
+  sed -i -e 's#atatus.collector.pidfile = "/var/run/atatus-php-collector.pid"#atatus.collector.pidfile = "/atatus-run/atatus-php-collector.pid"#g' /etc/php/conf.d/atatus.ini && \
+  sed -i -e 's#atatus.laravel.enable_queues = false#atatus.laravel.enable_queues = true#g' /etc/php/conf.d/atatus.ini
 
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
