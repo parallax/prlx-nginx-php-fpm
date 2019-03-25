@@ -168,16 +168,6 @@ if [ ! -z "$PHP_FPM_WORKERS" ]; then
 
 fi
 
-# Nginx custom snippets
-if [ -f /etc/nginx/custom.conf ]; then
-    printf "%-30s %-30s\n" "Custom Nginx Snippet:" "Enabled"
-    /usr/bin/php /usr/local/bin/nginx-custom
-fi
-
-if [ ! -f /etc/nginx/custom.conf ]; then
-    printf "%-30s %-30s\n" "Custom Nginx Snippet:" "Not Found"
-fi
-
 # Set SMTP settings
 if [ $ENVIRONMENT == 'production' ]; then
     printf "%-30s %-30s\n" "SMTP:" "master-smtp.smtp-production:25"
