@@ -21,19 +21,19 @@ if [ ! -z "$ATATUS_APM_LICENSE_KEY" ]; then
     printf "%-30s %-30s\n" "Atatus:" "Enabled"
 
     # Set the atatus api key
-    sed -i -e "s/atatus.license_key = \"\"/atatus.license_key = \"$ATATUS_APM_LICENSE_KEY\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.license_key = \"\"/atatus.license_key = \"$ATATUS_APM_LICENSE_KEY\"/g" /etc/php/php/fpm/conf.d/atatus.ini
 
     # Set the release stage to be the environment
-    sed -i -e "s/atatus.release_stage = \"production\"/atatus.release_stage = \"$ENVIRONMENT\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.release_stage = \"production\"/atatus.release_stage = \"$ENVIRONMENT\"/g" /etc/php/php/fpm/conf.d/atatus.ini
 
     # Set the app name to be site_name environment
-    sed -i -e "s/atatus.app_name = \"PHP App\"/atatus.app_name = \"$SITE_NAME\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.app_name = \"PHP App\"/atatus.app_name = \"$SITE_NAME\"/g" /etc/php/php/fpm/conf.d/atatus.ini
 
     # Set the app version to be the branch build
-    sed -i -e "s/atatus.app_version = \"\"/atatus.app_version = \"$SITE_BRANCH-$BUILD\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.app_version = \"\"/atatus.app_version = \"$SITE_BRANCH-$BUILD\"/g" /etc/php/php/fpm/conf.d/atatus.ini
 
     # Set the tags to contain useful data
-    sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_BRANCH-$BUILD, $SITE_BRANCH\"/g" /etc/php/conf.d/atatus.ini
+    sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_BRANCH-$BUILD, $SITE_BRANCH\"/g" /etc/php/php/fpm/conf.d/atatus.ini
 
 fi
 
@@ -42,7 +42,7 @@ if [ -z "$ATATUS_APM_LICENSE_KEY" ]; then
 
     # Disabled
     printf "%-30s %-30s\n" "Atatus:" "Disabled"
-    rm -f /etc/php/conf.d/atatus.ini
+    rm -f /etc/php/php/fpm/conf.d/atatus.ini
 
 fi
 
@@ -55,7 +55,7 @@ printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/ng
 if [ ! -z "$PHP_MEMORY_MAX" ]; then
     
     # Set PHP.ini accordingly
-    sed -i -e "s#memory_limit = 128M#memory_limit = ${PHP_MEMORY_MAX}M#g" /etc/php/php.ini
+    sed -i -e "s#memory_limit = 128M#memory_limit = ${PHP_MEMORY_MAX}M#g" /etc/php/php/fpm/php.ini 
 
 fi
 
@@ -75,8 +75,8 @@ if [ ! -z "$DISABLE_OPCACHE" ]; then
     printf "%-30s %-30s\n" "PHP Opcache:" "Disabled"
     
     # Set PHP.ini accordingly
-    sed -i -e "s#opcache.enable=1#opcache.enable=0#g" /etc/php/php.ini
-    sed -i -e "s#opcache.enable_cli=1#opcache.enable_cli=0#g" /etc/php/php.ini
+    sed -i -e "s#opcache.enable=1#opcache.enable=0#g" /etc/php/php/fpm/php.ini 
+    sed -i -e "s#opcache.enable_cli=1#opcache.enable_cli=0#g" /etc/php/php/fpm/php.ini 
 
 fi
 
@@ -85,7 +85,7 @@ fi
 if [ ! -z "$PHP_OPCACHE_MEMORY" ]; then
     
     # Set PHP.ini accordingly
-    sed -i -e "s#opcache.memory_consumption=16#opcache.memory_consumption=${PHP_OPCACHE_MEMORY}#g" /etc/php/php.ini
+    sed -i -e "s#opcache.memory_consumption=16#opcache.memory_consumption=${PHP_OPCACHE_MEMORY}#g" /etc/php/php/fpm/php.ini 
 
 fi
 
@@ -107,7 +107,7 @@ if [ ! -z "$PHP_SESSION_STORE" ]; then
         printf "%-30s %-30s\n" "PHP Sessions:" "Redis"
         printf "%-30s %-30s\n" "PHP Redis Host:" "$PHP_SESSION_STORE_REDIS_HOST"
         printf "%-30s %-30s\n" "PHP Redis Port:" "$PHP_SESSION_STORE_REDIS_PORT"
-        sed -i -e "s#session.save_handler = files#session.save_handler = redis\nsession.save_path = \"tcp://$PHP_SESSION_STORE_REDIS_HOST:$PHP_SESSION_STORE_REDIS_PORT\"#g" /etc/php/php.ini
+        sed -i -e "s#session.save_handler = files#session.save_handler = redis\nsession.save_path = \"tcp://$PHP_SESSION_STORE_REDIS_HOST:$PHP_SESSION_STORE_REDIS_PORT\"#g" /etc/php/php/fpm/php.ini 
     fi
 
 fi
@@ -121,7 +121,7 @@ if [ ! -z "$DISABLE_CRON" ]; then
 
 fi
 
-# If not set, enable monitoring:
+# If not set, enable cron:
 if [ -z "$DISABLE_CRON" ]; then
 
     # Enabled
@@ -134,7 +134,7 @@ fi
 # Set SMTP settings
 if [ $ENVIRONMENT == 'production' ]; then
     printf "%-30s %-30s\n" "SMTP:" "master-smtp.smtp-production:25"
-    sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/sendmail -t -i -S master-smtp.smtp-production:25#g" /etc/php/php.ini
+    sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/sendmail -t -i -S master-smtp.smtp-production:25#g" /etc/php/php/fpm/php.ini
     
     if [ -z "$MAIL_HOST" ]; then
         export MAIL_HOST=master-smtp.smtp-production
@@ -147,7 +147,7 @@ fi
 
 if [ $ENVIRONMENT == 'qa' ]; then
     printf "%-30s %-30s\n" "SMTP:" "master-smtp.mailhog-production:25"
-    sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/sendmail -t -i -S master-smtp.mailhog-production:25#g" /etc/php/php.ini
+    sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/sendmail -t -i -S master-smtp.mailhog-production:25#g" /etc/php/php/fpm/php.ini 
     
     if [ -z "$MAIL_HOST" ]; then
         export MAIL_HOST=master-smtp.mailhog-production

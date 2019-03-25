@@ -51,6 +51,7 @@ RUN sed -i -e 's#atatus.trace.response_time = 2000#atatus.trace.response_time = 
 
 # Symlink the cli one
 RUN rm -f /etc/php/php/cli/conf.d/atatus.ini && ln -s /etc/php/php/fpm/conf.d/atatus.ini /etc/php/php/cli/conf.d/atatus.ini
+RUN rm -f /etc/php/php/cli/php.ini && ln -s /etc/php/php/fpm/php.ini /etc/php/php/cli/php.ini
 
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
