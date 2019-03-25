@@ -6,9 +6,10 @@
 
 | PHP           | Nginx         | Docker tag                           |
 | ------------- | ------------- | -------------                        |
-| 5.6           | 1.13.9        | prlx/prlx-nginx-php-fpm:5.6-master   |
-| 7.1           | 1.13.9        | prlx/prlx-nginx-php-fpm:7.1-master   |
-| 7.2           | 1.13.9        | prlx/prlx-nginx-php-fpm:7.2-master   |
+| 5.6           | 1.15.8        | prlx/prlx-nginx-php-fpm:5.6-master   |
+| 7.1           | 1.15.8        | prlx/prlx-nginx-php-fpm:7.1-master   |
+| 7.2           | 1.15.9        | prlx/prlx-nginx-php-fpm:7.2-master   |
+| 7.3           | 1.15.9        | prlx/prlx-nginx-php-fpm:7.3-master   |
 
 [Browse all tags on Docker Hub](https://hub.docker.com/r/prlx/prlx-nginx-php-fpm/tags/)
 
@@ -130,64 +131,64 @@ Example:
 ```
 
 # PHP Modules
-| Module        | 5.6 | 7.1 | 7.2 | Notes                                                                                   |
-| ---           | --- | --- | --- | ---                                                                                     |
-| apc           | ✓   | ✖   | ✖   | Deprecated in PHP 7 and up                                                              |
-| apcu          | ✓   | ✓   | ✓   |                                                                                         |
-| bcmath        | ✓   | ✓   | ✓   |                                                                                         |
-| calendar      | ✓   | ✓   | ✓   |                                                                                         |
-| Core          | ✓   | ✓   | ✓   |                                                                                         |
-| ctype         | ✓   | ✓   | ✓   |                                                                                         |
-| curl          | ✓   | ✓   | ✓   |                                                                                         |
-| date          | ✓   | ✓   | ✓   |                                                                                         |
-| dom           | ✓   | ✓   | ✓   |                                                                                         |
-| ereg          | ✓   | ✖   | ✖   | Deprecated in PHP 7 and up                                                              |
-| exif          | ✓   | ✓   | ✓   |                                                                                         |
-| fileinfo      | ✓   | ✓   | ✓   |                                                                                         |
-| filter        | ✓   | ✓   | ✓   |                                                                                         |
-| ftp           | ✓   | ✓   | ✓   |                                                                                         |
-| gd            | ✓   | ✓   | ✓   |                                                                                         |
-| gettext       | ✓   | ✓   | ✓   |                                                                                         |
-| hash          | ✓   | ✓   | ✓   |                                                                                         |
-| iconv         | ✓   | ✓   | ✓   |                                                                                         |
-| imagick       | ✓   | ✓   | ✓   |                                                                                         |
-| intl          | ✓   | ✓   | ✓   |                                                                                         |
-| json          | ✓   | ✓   | ✓   |                                                                                         |
-| ldap          | ✓   | ✓   | ✓   |                                                                                         |
-| libxml        | ✓   | ✓   | ✓   |                                                                                         |
-| mbstring      | ✓   | ✓   | ✓   |                                                                                         |
-| mcrypt        | ✓   | ✓   | ✖   | Deprecated in PHP 7.2 and up                                                            |
-| memcached     | ✓   | ✓   | ✓   |                                                                                         |
-| mysqli        | ✓   | ✓   | ✓   |                                                                                         |
-| mysql         | ✓   | ✖   | ✖   | Deprecated in PHP 7 and up                                                              |
-| mysqlnd       | ✓   | ✓   | ✓   |                                                                                         |
-| newrelic      | ✓   | ✓   | ✓   |                                                                                         |
-| openssl       | ✓   | ✓   | ✓   |                                                                                         |
-| pcntl         | ✓   | ✓   | ✓   |                                                                                         |
-| pcre          | ✓   | ✓   | ✓   |                                                                                         |
-| PDO           | ✓   | ✓   | ✓   |                                                                                         |
-| pdo_mysql     | ✓   | ✓   | ✓   |                                                                                         |
-| pdo_sqlite    | ✓   | ✓   | ✓   |                                                                                         |
-| Phar          | ✓   | ✓   | ✓   |                                                                                         |
-| posix         | ✓   | ✓   | ✓   |                                                                                         |
-| readline      | ✓   | ✓   | ✓   |                                                                                         |
-| redis         | ✓   | ✓   | ✓   |                                                                                         |
-| Reflection    | ✓   | ✓   | ✓   |                                                                                         |
-| session       | ✓   | ✓   | ✓   |                                                                                         |
-| SimpleXML     | ✓   | ✓   | ✓   |                                                                                         |
-| soap          | ✓   | ✓   | ✓   |                                                                                         |
-| sockets       | ✓   | ✓   | ✓   |                                                                                         |
-| SPL           | ✓   | ✓   | ✓   |                                                                                         |
-| sqlite3       | ✓   | ✓   | ✓   |                                                                                         |
-| standard      | ✓   | ✓   | ✓   |                                                                                         |
-| tidy          | ✖   | ✓   | ✓   | Weirdly missing from upstream Alpine Linux repository                                   |
-| tokenizer     | ✓   | ✓   | ✓   |                                                                                         |
-| wddx          | ✓   | ✓   | ✓   |                                                                                         |
-| xml           | ✓   | ✓   | ✓   |                                                                                         |
-| xmlreader     | ✓   | ✓   | ✓   |                                                                                         |
-| xmlrpc        | ✓   | ✓   | ✖   | [Missing from upstream PHP 7.2](https://github.com/codecasts/php-alpine/issues/23)      |
-| xmlwriter     | ✓   | ✓   | ✓   |                                                                                         |
-| xsl           | ✓   | ✓   | ✓   |                                                                                         |
-| Zend OPcache  | ✓   | ✓   | ✓   |                                                                                         |
-| zip           | ✓   | ✓   | ✓   |                                                                                         |
-| zlib          | ✓   | ✓   | ✓   |                                                                                         |
+| Module        | 5.6 | 7.1 | 7.2 |  7.3 |Notes                                                                                   |
+| ---           | --- | --- | --- |  --- |---                                                                                     |
+| apc           | ✓   | ✖   | ✖   | ✖   | Deprecated in PHP 7 and up                                                              |
+| apcu          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| bcmath        | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| calendar      | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| Core          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| ctype         | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| curl          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| date          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| dom           | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| ereg          | ✓   | ✖   | ✖   | ✖   | Deprecated in PHP 7 and up                                                              |
+| exif          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| fileinfo      | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| filter        | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| ftp           | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| gd            | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| gettext       | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| hash          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| iconv         | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| imagick       | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| intl          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| json          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| ldap          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| libxml        | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| mbstring      | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| mcrypt        | ✓   | ✓   | ✖   | ✖   | Deprecated in PHP 7.2 and up                                                            |
+| memcached     | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| mysqli        | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| mysql         | ✓   | ✖   | ✖   | ✖   | Deprecated in PHP 7 and up                                                              |
+| mysqlnd       | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| newrelic      | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| openssl       | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| pcntl         | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| pcre          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| PDO           | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| pdo_mysql     | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| pdo_sqlite    | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| Phar          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| posix         | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| readline      | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| redis         | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| Reflection    | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| session       | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| SimpleXML     | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| soap          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| sockets       | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| SPL           | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| sqlite3       | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| standard      | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| tidy          | ✖   | ✓   | ✓   | ✓    |Weirdly missing from upstream Alpine Linux repository                                   |
+| tokenizer     | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| wddx          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| xml           | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| xmlreader     | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| xmlrpc        | ✓   | ✓   | ✖   | ✖   |[Missing from upstream PHP 7.2](https://github.com/codecasts/php-alpine/issues/23)      |
+| xmlwriter     | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| xsl           | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| Zend OPcache  | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| zip           | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
+| zlib          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |

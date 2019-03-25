@@ -1,9 +1,9 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
 RUN apk add --no-cache bash supervisor curl
 
 RUN apk --no-cache add ca-certificates openssl && \
-  echo "@php https://dl.bintray.com/php-alpine/v3.8/php-7.2" >> /etc/apk/repositories
+  echo "@php https://dl.bintray.com/php-alpine/v3.9/php-7.3" >> /etc/apk/repositories
 
 # Install nginx
 
