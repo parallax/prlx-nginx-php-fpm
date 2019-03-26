@@ -41,8 +41,8 @@ if [ ! -z "$ATATUS_APM_LICENSE_KEY" ]; then
     # Set the tags to contain useful data
     sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_BRANCH-$BUILD, $SITE_BRANCH\"/g" /etc/php/conf.disabled/atatus.ini
 
-    # Enable Atatus supervisor job
-    cp /etc/supervisor.d/atatus.conf /etc/supervisord-enabled/
+    # Start Atatus
+    /usr/bin/atatus-php-collector --conn /run/atatus.sock --log-file /dev/stdout --log-level verbose_all --pidfile /run/atatus-php-collector.pid
 
 fi
 
