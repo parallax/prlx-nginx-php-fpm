@@ -27,7 +27,6 @@ For help running these locally with docker run see the [docker run reference](ht
 | SITE_BRANCH                     | The running branch of your project, i.e. 'master'. Used by NR for app name.                                     | ✓        | ✓   | ✓      |
 | ENVIRONMENT                     | The environment you're running in, i.e. 'qa' or 'production'. Used by NR for app name.                          | ✓        | ✓   | ✓      |
 | ATATUS_API_KEY                  | Your Atatus Project API key. Atatus won't be used if this is not set.                                           | ✖        | ✓   | ✓      |
-| ENABLE_MONITORING               | Set to any value (1, true, etc) to enable all monitoring functionality (see ports/services)                     | ✖        | ✓   | ✖      |
 | NGINX_PORT                      | Defaults to 80                                                                                                  | ✖        | ✓   | ✖      |
 | NGINX_WEB_ROOT                  | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths! | ✖        | ✓   | ✖      |
 | PHP_MEMORY_MAX                  | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                         | ✖        | ✓   | ✓      |
@@ -57,13 +56,6 @@ We use [Supervisord](http://supervisord.org/) to bootstrap the following service
 | -------------                                                                            | -------------                                           | -------------       |
 | [Nginx](https://www.nginx.com/)                                                          | Web server                                              | 0.0.0.0:80          |
 | [PHP-FPM](https://php-fpm.org/)                                                          | PHP running as a pool of workers                        | /run/php.sock       |
-| [Nginx Status](https://github.com/vozlt/nginx-module-vts)                                | nginx-module-vts stats                                  | 127.0.0.1:9001      |
-| [Nginx Exporter](https://github.com/hnlq715/nginx-vts-exporter)                          | Exports nginx-module-vts stats as Prometheus metrics    | 0.0.0.0:9913        |
-| [PHP-FPM Status](https://brandonwamboldt.ca/understanding-the-php-fpm-status-page-1603/) | PHP-FPM Statistics                                      | 127.0.0.1:9000      |
-| [PHP-FPM Exporter](https://github.com/bakins/php-fpm-exporter)                           | Exports php-fpm stats as Prometheus metrics             | 0.0.0.0:8080        |
-| [New Relic](https://newrelic.com/)                                                       | New Relic APM, has a free version (but without alerting)| /tmp/.newrelic.sock |
-
-You don't have to run all of these services - if you're not using Kubernetes, the status and Prometheus exporters are likely to be of little use to you, in which case we would suggest setting DISABLE_MONITORING to 'true' to only have an Nginx listening on 0.0.0.0:80 and a PHP-FPM socket at /run/php.sock.
 
 ## Example Container
 
@@ -76,14 +68,6 @@ docker run -p 8080:80 example
 ```
 
 You should be able to visit the container on http://127.0.0.1:8080/ and see the contents of index.php from /examples/hello-world/src.
-
-# Custom Nginx snippets
-
-The default Nginx configuration is in conf/nginx-site.conf and is copied to /etc/nginx/sites-enabled/site.conf on build.
-
-Historically we've been overwriting this file ad-hoc when other requirements dictate a different config file. This makes for an unwieldly configuration that's hard to change in one place however.
-
-We now support a configuration snippet written to /etc/nginx/custom.conf that will be inserted into the site.conf replacing the ####CUSTOM#### placeholder.
 
 # Custom Startup Scripts
 
@@ -162,7 +146,6 @@ Example:
 | mysqli        | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
 | mysql         | ✓   | ✖   | ✖   | ✖   | Deprecated in PHP 7 and up                                                              |
 | mysqlnd       | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
-| newrelic      | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
 | openssl       | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
 | pcntl         | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
 | pcre          | ✓   | ✓   | ✓   |  ✓   |                                                                                        |
