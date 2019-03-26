@@ -242,8 +242,6 @@ RUN wget https://s3.amazonaws.com/atatus-artifacts/atatus-php/downloads/atatus-p
 # Atatus configurations
 RUN sed -i -e 's#atatus.trace.response_time = 2000#atatus.trace.response_time = 1500#g' /etc/php/conf.d/atatus.ini && \
   sed -i -e 's#atatus.collector.pidfile = "/var/run/atatus-php-collector.pid"#atatus.collector.pidfile = "/run/atatus-php-collector.pid"#g' /etc/php/conf.d/atatus.ini && \
-  sed -i -e 's#atatus.agent.log_level = "warning"#atatus.agent.log_level = "verbose_all"#g' /etc/php/conf.d/atatus.ini && \
-  sed -i -e 's#atatus.collector.log_level = "warning"#atatus.collector.log_level = "verbose_all"#g' /etc/php/conf.d/atatus.ini && \
   sed -i -e 's#atatus.collector.connection = "/tmp/.atatus.sock"#atatus.collector.connection = "/run/atatus.sock"#g' /etc/php/conf.d/atatus.ini
 
 
