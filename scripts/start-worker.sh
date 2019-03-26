@@ -179,6 +179,9 @@ fi
 # Enable the worker-specific supervisor files
 cp /etc/supervisord-worker/* /etc/supervisord-enabled/
 
+# Kill any Atatus
+killall atatus-php-collector
+
 printf "\n\033[1;1mStarting supervisord\033[0m\n\n"
 
 # Start supervisord and services
