@@ -246,6 +246,8 @@ RUN sed -i -e 's#atatus.trace.response_time = 2000#atatus.trace.response_time = 
   sed -i -e 's#atatus.collector.log_level = "warning"#atatus.collector.log_level = "verbose_all"#g' /etc/php/conf.d/atatus.ini && \
   sed -i -e 's#atatus.collector.connection = "/tmp/.atatus.sock"#atatus.collector.connection = "/run/atatus.sock"#g' /etc/php/conf.d/atatus.ini
 
+# Move the atatus config out so it's not automatically enabled
+RUN mkdir -p /etc/php/conf.disabled && mv /etc/php/conf.d/atatus.ini /etc/php/conf.disabled/atatus.ini
 
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf

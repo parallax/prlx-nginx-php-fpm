@@ -51,7 +51,6 @@ if [ -z "$ATATUS_APM_LICENSE_KEY" ]; then
 
     # Disabled
     printf "%-30s %-30s\n" "Atatus:" "Disabled"
-    rm -f /etc/php/conf.d/atatus.ini
 
 fi
 
@@ -228,8 +227,9 @@ fi
 printf "%-30s %-30s\n" "PHP-FPM Max Workers:" "`cat /etc/php/php-fpm.d/www.conf | grep 'pm.max_children = ' | sed -e 's/pm.max_children = //g'`"
 # End PHP-FPM
 
-# Kill any Atatus
-killall atatus-php-collector
+if [ ! -z "$ATATUS_APM_LICENSE_KEY" ]; then
+    mv /etc/php/conf.disabled/atatus.ini /etc/php/conf.d/atatus.ini
+fi
 
 printf "\n\033[1;1mStarting supervisord\033[0m\n\n"
 

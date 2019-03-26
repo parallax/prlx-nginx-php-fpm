@@ -45,7 +45,6 @@ if [ -z "$ATATUS_APM_LICENSE_KEY" ]; then
 
     # Disabled
     printf "%-30s %-30s\n" "Atatus:" "Disabled"
-    rm -f /etc/php/conf.d/atatus.ini
 
 fi
 
@@ -179,8 +178,9 @@ fi
 # Enable the worker-specific supervisor files
 cp /etc/supervisord-worker/* /etc/supervisord-enabled/
 
-# Kill any Atatus
-killall atatus-php-collector
+if [ ! -z "$ATATUS_APM_LICENSE_KEY" ]; then
+    mv /etc/php/conf.disabled/atatus.ini /etc/php/conf.d/atatus.ini
+fi
 
 printf "\n\033[1;1mStarting supervisord\033[0m\n\n"
 
