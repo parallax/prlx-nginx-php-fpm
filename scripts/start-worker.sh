@@ -35,6 +35,9 @@ if [ ! -z "$ATATUS_APM_LICENSE_KEY" ]; then
     # Set the tags to contain useful data
     sed -i -e "s/atatus.tags = \"\"/atatus.tags = \"$SITE_BRANCH-$BUILD, $SITE_BRANCH\"/g" /etc/php/conf.d/atatus.ini
 
+    # Enable Atatus supervisor job
+    cp /etc/supervisor.d/atatus.conf /etc/supervisord-enabled/
+
 fi
 
 # Atatus - if api key is not set then disable
