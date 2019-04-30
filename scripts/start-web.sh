@@ -53,7 +53,7 @@ if [ -z "$ATATUS_APM_LICENSE_KEY" ]; then
 fi
 
 # Whether to send cache headers automatically for PHP scripts
-if [ ! -z "$PHP_DISABE_CACHE_HEADERS" ]; then
+if [ ! -z "$PHP_DISABLE_CACHE_HEADERS" ]; then
     sed -i -e "s#session.cache_limiter = nocache#session.cache_limiter = ''#g" /etc/php/php.ini
 fi
 
