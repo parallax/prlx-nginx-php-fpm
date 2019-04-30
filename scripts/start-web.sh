@@ -52,6 +52,11 @@ if [ -z "$ATATUS_APM_LICENSE_KEY" ]; then
 
 fi
 
+# Whether to send cache headers automatically for PHP scripts
+if [ -z "$PHP_DISABE_CACHE_HEADERS" ]; then
+    sed -i -e "s#session.cache_limiter = nocache#session.cache_limiter = ''#g" /etc/php/php.ini
+fi
+
 # Version numbers:
 printf "%-30s %-30s\n" "PHP Version:" "`php -r 'echo phpversion();'`"
 printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"
