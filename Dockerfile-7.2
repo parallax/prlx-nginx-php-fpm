@@ -7,10 +7,10 @@ RUN apk --no-cache add ca-certificates openssl && \
 
 # Install nginx
 
-ENV NGINX_VERSION 1.15.9
+ENV NGINX_VERSION 1.16.0
 
 # Add PHP public keys 
-ADD https://php.codecasts.rocks/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
+ADD https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
 
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
   && CONFIG="\
