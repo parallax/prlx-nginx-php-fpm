@@ -173,6 +173,11 @@ if [ ! -z "$PHP_FPM_WORKERS" ]; then
 
 fi
 
+# Enable short tags for older sites
+if [ ! -z "$PHP_ENABLE_SHORT_TAGS" ]; then
+    sed -i -e 's/short_open_tag = Off/short_open_tag = On/g' /etc/php/php.ini
+fi
+
 # Nginx custom snippets
 if [ -f /etc/nginx/custom.conf ]; then
     printf "%-30s %-30s\n" "Custom Nginx Snippet:" "Enabled"
