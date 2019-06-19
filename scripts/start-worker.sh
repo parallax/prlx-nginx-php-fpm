@@ -112,6 +112,11 @@ if [ ! -z "$PHP_SESSION_STORE" ]; then
 
 fi
 
+# Enable short tags for older sites
+if [ ! -z "$PHP_ENABLE_SHORT_TAGS" ]; then
+    sed -i -e 's/short_open_tag = Off/short_open_tag = On/g' /etc/php/php.ini
+fi
+
 # Cron
 # If DISABLE_CRON is set:
 if [ ! -z "$DISABLE_CRON" ]; then
