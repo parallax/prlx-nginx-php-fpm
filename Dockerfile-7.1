@@ -244,7 +244,7 @@ RUN mkdir -p /src && \
 RUN curl https://getcomposer.org/installer -o /tmp/composer-installer && php /tmp/composer-installer --install-dir=/usr/local/bin --filename=composer && rm -f /tmp/composer-installer
 
 # Atatus
-RUN wget https://s3.amazonaws.com/atatus-artifacts/atatus-php/downloads/atatus-php-1.6.1-x64-musl.tar.gz && tar -xzvf atatus-php-1.6.1-x64-musl.tar.gz && cd atatus-php-1.6.1-x64-musl && ./install.sh
+RUN wget https://s3.amazonaws.com/atatus-artifacts/atatus-php/downloads/atatus-php-1.7.0-x64-musl.tar.gz && tar -xzvf atatus-php-1.7.0-x64-musl.tar.gz && cd atatus-php-1.7.0-x64-musl && ./install.sh
 
 # Atatus configurations
 RUN sed -i -e 's#atatus.trace.response_time = 2000#atatus.trace.response_time = 1500#g' /etc/php/conf.d/atatus.ini && \
