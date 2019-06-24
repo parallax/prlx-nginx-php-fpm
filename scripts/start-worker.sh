@@ -46,6 +46,17 @@ if [ -z "$ATATUS_APM_LICENSE_KEY" ]; then
 
 fi
 
+# Atatus - configure raw sql logs if desirable
+if [ ! -z "$ATATUS_APM_RAW_SQL" ]; then
+
+    # Enabled
+    printf "%-30s %-30s\n" "Atatus SQL:" "Raw"
+
+    # Set the atatus api key
+    sed -i -e "s/atatus.sql.capture = \"normalized\"/atatus.sql.capture = \"raw\"/g" /etc/php/conf.d/atatus.ini
+
+fi
+
 # Version numbers:
 printf "%-30s %-30s\n" "PHP Version:" "`php -r 'echo phpversion();'`"
 printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"

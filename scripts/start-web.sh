@@ -52,6 +52,17 @@ if [ -z "$ATATUS_APM_LICENSE_KEY" ]; then
 
 fi
 
+# Atatus - configure raw sql logs if desirable
+if [ ! -z "$ATATUS_APM_RAW_SQL" ]; then
+
+    # Enabled
+    printf "%-30s %-30s\n" "Atatus SQL:" "Raw"
+
+    # Set the atatus api key
+    sed -i -e "s/atatus.sql.capture = \"normalized\"/atatus.sql.capture = \"raw\"/g" /etc/php/conf.d/atatus.ini
+
+fi
+
 # Whether to send cache headers automatically for PHP scripts
 if [ ! -z "$PHP_DISABLE_CACHE_HEADERS" ]; then
     sed -i -e "s#session.cache_limiter = nocache#session.cache_limiter = ''#g" /etc/php/php.ini
