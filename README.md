@@ -28,6 +28,7 @@ For help running these locally with docker run see the [docker run reference](ht
 | ENVIRONMENT                     | The environment you're running in, i.e. 'qa' or 'production'. Used by NR for app name.                          | ✓        | ✓   | ✓      |
 | ATATUS_APM_LICENSE_KEY          | Your Atatus license key. Atatus won't be used if this is not set.                                               | ✖        | ✓   | ✓      |
 | ATATUS_APM_RAW_SQL              | Set to any value (1, true, etc) to use raw sql logging into Atatus                                              | ✖        | ✓   | ✓      |
+| ATATUS_APM_LARAVEL_QUEUES       | Set to any value (1, true, etc) to use laravel queue transactions in Atatus                                     | ✖        | ✓   | ✓      |
 | NGINX_PORT                      | Defaults to 80                                                                                                  | ✖        | ✓   | ✖      |
 | NGINX_WEB_ROOT                  | Defaults to /src/public, use absolute paths if you wish to change this behaviour. Doesn't support '#' in paths! | ✖        | ✓   | ✖      |
 | PHP_MEMORY_MAX                  | Maximum PHP request memory, in megabytes (i.e. '256'). Defaults to 128.                                         | ✖        | ✓   | ✓      |

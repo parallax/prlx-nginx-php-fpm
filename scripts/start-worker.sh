@@ -57,6 +57,17 @@ if [ ! -z "$ATATUS_APM_RAW_SQL" ]; then
 
 fi
 
+# Atatus - configure laravel queues if desirable
+if [ ! -z "$ATATUS_APM_LARAVEL_QUEUES" ]; then
+
+    # Enabled
+    printf "%-30s %-30s\n" "Atatus Laravel Queues:" "Yes"
+
+    # Set the atatus api key
+    sed -i -e "s/atatus.laravel.enable_queues = false/atatus.laravel.enable_queues = true/g" /etc/php/conf.d/atatus.ini
+
+fi
+
 # Version numbers:
 printf "%-30s %-30s\n" "PHP Version:" "`php -r 'echo phpversion();'`"
 printf "%-30s %-30s\n" "Nginx Version:" "`/usr/sbin/nginx -v 2>&1 | sed -e 's/nginx version: nginx\///g'`"

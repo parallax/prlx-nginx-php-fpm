@@ -63,6 +63,17 @@ if [ ! -z "$ATATUS_APM_RAW_SQL" ]; then
 
 fi
 
+# Atatus - configure laravel queues if desirable
+if [ ! -z "$ATATUS_APM_LARAVEL_QUEUES" ]; then
+
+    # Enabled
+    printf "%-30s %-30s\n" "Atatus Laravel Queues:" "Yes"
+
+    # Set the atatus api key
+    sed -i -e "s/atatus.laravel.enable_queues = false/atatus.laravel.enable_queues = true/g" /etc/php/conf.d/atatus.ini
+
+fi
+
 # Whether to send cache headers automatically for PHP scripts
 if [ ! -z "$PHP_DISABLE_CACHE_HEADERS" ]; then
     sed -i -e "s#session.cache_limiter = nocache#session.cache_limiter = ''#g" /etc/php/php.ini
