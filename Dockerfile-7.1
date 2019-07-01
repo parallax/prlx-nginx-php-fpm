@@ -2,7 +2,7 @@ FROM alpine:3.7
 
 ENV PHP_VERSION 7.1
 
-RUN apk add --no-cache bash supervisor curl
+RUN apk add --no-cache bash supervisor curl php7.1-simplexml@php
 
 RUN apk --no-cache add ca-certificates openssl && \
   apk add --no-cache wget ca-certificates \
