@@ -2,7 +2,7 @@ FROM alpine:3.7
 
 ENV PHP_VERSION 7.1
 
-RUN apk add --no-cache bash supervisor curl php7.1-simplexml@php
+RUN apk add --no-cache bash supervisor curl
 
 RUN apk --no-cache add ca-certificates openssl && \
   apk add --no-cache wget ca-certificates \
@@ -186,12 +186,15 @@ RUN apk add --no-cache \
   php7.1-curl@php \
   php7.1-dom@php \
   php7.1-exif@php \
+  php7.1-fileinfo@php \
   php7.1-ftp@php \
   php7.1-gd@php \
   php7.1-iconv@php \
   php7.1-mbstring@php \
+  php7.1-mcrypt@php \
   php7.1-mysqli@php \
   php7.1-mysqlnd@php \
+  php7.1-simplexml@php \
   php7.1-openssl@php \
   php7.1-pdo@php \
   php7.1-session@php \
@@ -222,6 +225,8 @@ RUN apk add --no-cache \
   php7.1-sqlite3@php \ 
   php7.1-redis@php \ 
   php7.1-intl@php \ 
+  php7.1-xmlrpc@php \ 
+  php7.1-xmlwriter@php \ 
   php7.1-fpm@php
 
 # These only exist in 7.1, not 7.2
