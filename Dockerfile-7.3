@@ -177,6 +177,7 @@ RUN chown -R nobody:nobody /var/cache/nginx/client_temp && \
 
 COPY scripts/supervisor-healthcheck.sh /supervisor-healthcheck.sh
 COPY scripts/healthcheck.py /healthcheck.py
+RUN chmod +x /supervisor-healthcheck.sh
 
 RUN apk add --no-cache \
   php7@php \
