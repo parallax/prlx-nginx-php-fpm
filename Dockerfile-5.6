@@ -172,6 +172,9 @@ RUN chown -R nobody:nobody /var/cache/nginx/client_temp && \
  chown -R nobody:nobody /var/cache/nginx/uwsgi_temp && \
  chown -R nobody:nobody /var/cache/nginx/scgi_temp
 
+COPY scripts/supervisor-healthcheck.sh /supervisor-healthcheck.sh
+COPY scripts/healthcheck.py /healthcheck.py
+
 RUN apk add --no-cache \
   php5 \
   php5-common \
