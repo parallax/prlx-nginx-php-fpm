@@ -15,7 +15,7 @@ printf "%-30s %-30s\n" "Branch:" "$SITE_BRANCH"
 printf "%-30s %-30s\n" "Environment:" "$ENVIRONMENT"
 
 # Copy files to /etc/dynamic-configuration-writeable
-cp /etc/dynamic-configuration/* /etc/dynamic-configuration-writeable/
+cp /etc/dynamic-config/* /etc/dynamic-config-writeable/
 
 # Enable Nginx
 cp /etc/supervisor.d/nginx.conf /etc/supervisord-enabled/
