@@ -291,7 +291,4 @@ RUN /usr/bin/php-fpm --fpm-config /etc/php/php-fpm.conf -t
 # Cron
 RUN mkdir -p /etc/cron.d
 
-# Chmod
-RUN chmod +x /startup-all.sh && chmod +x /startup-web.sh
-
 CMD ["/start-web.sh"]

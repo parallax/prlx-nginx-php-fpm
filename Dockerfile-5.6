@@ -292,9 +292,6 @@ RUN /usr/bin/php-fpm --fpm-config /etc/php/php-fpm.conf -t
 # Cron
 RUN mkdir -p /etc/cron.d
 
-# Chmod
-RUN chmod +x /startup-all.sh && chmod +x /startup-web.sh
-
 # Add a configuration directory and symlink in the relevant files
 RUN mkdir /etc/dynamic-config
 RUN cp /etc/php/conf.d/atatus.ini /etc/dynamic-config/atatus.ini && rm -f /etc/php/conf.d/atatus.ini && ln -snf /etc/dynamic-config-writeable/atatus.ini /etc/php/conf.d/atatus.ini
