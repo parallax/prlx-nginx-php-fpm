@@ -14,6 +14,9 @@ printf "%-30s %-30s\n" "Site:" "$SITE_NAME"
 printf "%-30s %-30s\n" "Branch:" "$SITE_BRANCH"
 printf "%-30s %-30s\n" "Environment:" "$ENVIRONMENT"
 
+# Copy files to /etc/dynamic-configuration-writeable
+cp /etc/dynamic-configuration/* /etc/dynamic-configuration-writeable/
+
 # Enable Nginx
 cp /etc/supervisor.d/nginx.conf /etc/supervisord-enabled/
 
@@ -245,12 +248,14 @@ sed -i -e "s#sendmail_path = /usr/sbin/sendmail -t -i#sendmail_path = /usr/sbin/
 # Startup scripts
 if [ -f /startup-all.sh ]; then
     printf "%-30s %-30s\n" "Startup Script:" "Running"
-    chmod +x /startup-all.sh && ./startup-all.sh
+    #chmod +x /startup-all.sh && 
+    ./startup-all.sh
 fi
 
 if [ -f /startup-web.sh ]; then
     printf "%-30s %-30s\n" "Web Startup Script:" "Running"
-    chmod +x /startup-web.sh && ./startup-web.sh
+    #chmod +x /startup-web.sh &&
+    ./startup-web.sh
 fi
 
 # Print the value
