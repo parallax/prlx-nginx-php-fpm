@@ -1,0 +1,125 @@
+schemaVersion: "2.0.0"
+commandTests:
+  - name: "Nginx Config"
+    setup: [["/configure.sh"]]
+    command: "nginx"
+    args: ["-t"]
+    excludedOutput: [".*failed"]
+  - name: "PHP-FPM Config"
+    setup: [["/configure.sh"]]
+    command: "/usr/sbin/php-fpm"
+    args: ["-t", "--fpm-config", "/etc/config/write/php/php-fpm.conf"]
+    excludedOutput: [".*failed"]
+  - name: "Disable Atatus when no key set"
+    setup: [["/configure.sh"]]
+    command: "php"
+    args: ["-m"]
+    excludedOutput: ["atatus"]
+  - name: "Atatus Raw SQL Enabled"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    args: ["/etc/config/write/php/conf.d/atatus.ini"]
+    envVars:
+    - key: "ATATUS_APM_LICENSE_KEY"
+      value: "test"
+    - key: "ATATUS_APM_RAW_SQL"
+      value: "1"
+    - key: "ENVIRONMENT"
+      value: "qa"
+    - key: "SITE_NAME"
+      value: "containertest"
+    - key: "SITE_BRANCH"
+      value: "test"
+    - key: "BUILD"
+      value: "1"
+    expectedOutput: ["atatus.sql.capture = \"raw\""]
+  - name: "Atatus Raw SQL Default"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    args: ["/etc/config/write/php/conf.d/atatus.ini"]
+    envVars:
+    - key: "ATATUS_APM_LICENSE_KEY"
+      value: "test"
+    - key: "ENVIRONMENT"
+      value: "qa"
+    - key: "SITE_NAME"
+      value: "containertest"
+    - key: "SITE_BRANCH"
+      value: "test"
+    - key: "BUILD"
+      value: "1"
+    expectedOutput: ["atatus.sql.capture = \"normalized\""]
+  - name: "Atatus Laravel Queues Enabled"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    args: ["/etc/config/write/php/conf.d/atatus.ini"]
+    envVars:
+    - key: "ATATUS_APM_LICENSE_KEY"
+      value: "test"
+    - key: "ATATUS_APM_LARAVEL_QUEUES"
+      value: "1"
+    - key: "ENVIRONMENT"
+      value: "qa"
+    - key: "SITE_NAME"
+      value: "containertest"
+    - key: "SITE_BRANCH"
+      value: "test"
+    - key: "BUILD"
+      value: "1"
+    expectedOutput: ["atatus.laravel.enable_queues = true"]
+  - name: "Atatus Laravel Queues Default"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    args: ["/etc/config/write/php/conf.d/atatus.ini"]
+    envVars:
+    - key: "ATATUS_APM_LICENSE_KEY"
+      value: "test"
+    - key: "ENVIRONMENT"
+      value: "qa"
+    - key: "SITE_NAME"
+      value: "containertest"
+    - key: "SITE_BRANCH"
+      value: "test"
+    - key: "BUILD"
+      value: "1"
+    expectedOutput: ["atatus.laravel.enable_queues = false"]
+  - name: "PHP Cache Limiter Default"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    args: ["/etc/config/write/php/php.ini"]
+    expectedOutput: ["session.cache_limiter = nocache"]
+  - name: "PHP Cache Limiter Set"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    args: ["/etc/config/write/php/php.ini"]
+    envVars:
+    - key: "PHP_DISABLE_CACHE_HEADERS"
+      value: "1"
+    expectedOutput: ["session.cache_limiter = ''"]
+  - name: "Nginx Webroot Set"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    args: ["/etc/config/write/nginx/sites-enabled/site.conf"]
+    envVars:
+    - key: "NGINX_WEB_ROOT"
+      value: "/src/test"
+    expectedOutput: ["root /src/test"]
+  - name: "Nginx Webroot Default"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    args: ["/etc/config/write/nginx/sites-enabled/site.conf"]
+    expectedOutput: ["root /src/public"]
+    # NGINX_PORT
+  - name: "Nginx Port Default"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    args: ["/etc/config/write/nginx/sites-enabled/site.conf"]
+    expectedOutput: ["listen 80"]
+  - name: "Nginx Port Custom"
+    setup: [["/configure.sh"]]
+    command: "cat"
+    envVars:
+    - key: "NGINX_PORT"
+      value: "8123"
+    args: ["/etc/config/write/nginx/sites-enabled/site.conf"]
+    expectedOutput: ["listen 8123"]

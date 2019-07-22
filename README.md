@@ -1,15 +1,16 @@
 # prlx-nginx-php-fpm
 
-> A relatively clean but full-featured, usable nginx and php-fpm docker image supporting PHP versions 5.6, 7.1, 7.2 maintained by [Parallax](https://parall.ax/)
+## Based on https://github.com/phpearth/docker-php repositories
+
+> A relatively clean but full-featured, usable nginx and php-fpm docker image supporting PHP versions 7.1, 7.2, 7.3 maintained by [Parallax](https://parall.ax/)
 
 ## Docker Tags 
 
-| PHP           | Nginx         | Docker tag                           |
-| ------------- | ------------- | -------------                        |
-| 5.6           | 1.17.0        | prlx/prlx-nginx-php-fpm:5.6-master   |
-| 7.1           | 1.17.0        | prlx/prlx-nginx-php-fpm:7.1-master   |
-| 7.2           | 1.17.0        | prlx/prlx-nginx-php-fpm:7.2-master   |
-| 7.3           | 1.17.0        | prlx/prlx-nginx-php-fpm:7.3-master   |
+| PHP           | Nginx         | Docker tag                          |
+| ------------- | ------------- | -------------                       |
+| 7.1.28           |         | prlx/prlx-nginx-php-fpm:7.1-earth   |
+| 7.2.17           | {{ NGINX7.2 }}        | prlx/prlx-nginx-php-fpm:7.2-earth   |
+| 7.3.4           | {{ NGINX7.3 }}        | prlx/prlx-nginx-php-fpm:7.3-earth   |
 
 [Browse all tags on Docker Hub](https://hub.docker.com/r/prlx/prlx-nginx-php-fpm/tags/)
 
@@ -23,7 +24,7 @@ For help running these locally with docker run see the [docker run reference](ht
 
 | Key                             | Description                                                                                                     | Required | Web | Worker |
 | ---                             | ---                                                                                                             | ---      | --- | ---    |
-| SITE_NAME                       | The name of your project, i.e. 'mywebsite'. Used by NR for app name.                                            | ✓        | ✓   | ✓      |
+| SITE_NAME                       | The name of your project, i.e. 'mywebsite'. Used by Atatus for app name.                                        | ✓        | ✓   | ✓      |
 | SITE_BRANCH                     | The running branch of your project, i.e. 'master'. Used by NR for app name.                                     | ✓        | ✓   | ✓      |
 | ENVIRONMENT                     | The environment you're running in, i.e. 'qa' or 'production'. Used by NR for app name.                          | ✓        | ✓   | ✓      |
 | ATATUS_APM_LICENSE_KEY          | Your Atatus license key. Atatus won't be used if this is not set.                                               | ✖        | ✓   | ✓      |

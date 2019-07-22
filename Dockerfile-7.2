@@ -66,6 +66,9 @@ ENV \
         ca-certificates \
         supervisor \
         bash \
+        tzdata \
+        openssl \
+        wget \
         curl"
 
 # PHP.earth Alpine repository for better developer experience
@@ -88,7 +91,7 @@ RUN rm -f /var/log/atatus/agent.log && rm -f /var/log/atatus/collector.log && rm
 # Supervisor
 ADD conf/supervisord.conf /etc/supervisord.conf
 ADD conf/supervisor.d /etc/supervisor.d
-RUN ln -sf /etc/config-write/supervisord-enabled /etc/supervisord-enabled && mkdir -p /etc/supervisord-worker
+RUN ln -sf /etc/config/write/supervisord-enabled /etc/supervisord-enabled && mkdir -p /etc/supervisord-worker
 
 RUN mkdir -p /etc/config/read /etc/config/write /etc/config/read/supervisord-enabled /etc/config/read/php /etc/config/read/php/conf.d /etc/config/read/nginx/sites-enabled
 
@@ -104,8 +107,24 @@ RUN rm -f /etc/nginx/nginx.conf && ln -sf /etc/config/write/nginx/nginx.conf /et
 ADD conf/nginx-site.conf /etc/config/read/nginx/sites-enabled/site.conf
 RUN ln -sf /etc/config/write/nginx/sites-enabled /etc/nginx/sites-enabled
 
+# PHP Config
+ADD conf/php-fpm.conf /etc/config/read/php/php-fpm.conf
+#RUN rm -f /etc/php/$PHP_VERSION/php-fpm.conf && ln -sf /etc/config/write/php/php-fpm.conf /etc/php/$PHP_VERSION/php-fpm.conf
+ADD conf/php.ini /etc/config/read/php/php.ini
+RUN rm -f /etc/php/$PHP_VERSION/php.ini && ln -sf /etc/config/write/php/php.ini /etc/php/$PHP_VERSION/php.ini
+ADD conf/php-www.conf /etc/config/read/php/www.conf
+RUN rm -f /etc/php/$PHP_VERSION/php-fpm.d/www.conf && ln -sf /etc/config/write/php/www.conf /etc/php/$PHP_VERSION/php-fpm.d/www.conf
+
 # Scripts
-ADD scripts/copyconfig.sh /copyconfig.sh
-RUN chmod +x /copyconfig.sh
+ADD scripts/start-web.sh /start-web.sh
+RUN chmod 755 /start-web.sh
+ADD scripts/start-worker.sh /start-worker.sh
+RUN chmod 755 /start-worker.sh
+ADD scripts/supervisor-healthcheck.sh /supervisor-healthcheck.sh
+RUN chmod 755 /supervisor-healthcheck.sh
+ADD scripts/configure.sh /configure.sh
+RUN chmod 755 /configure.sh
+ADD scripts/configure-worker.sh /configure-worker.sh
+RUN chmod 755 /configure-worker.sh
 
 CMD ["/start-web.sh"]
