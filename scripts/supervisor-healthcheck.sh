@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python healthcheck.py | grep -qv "'statename': 'FATAL'"
+python /healthcheck.py | grep -qv "'statename': 'FATAL'"
